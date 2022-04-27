@@ -1,0 +1,90 @@
+Week 9 Minutes 
+
+Absences: 
+ - Joon Suh is unable to attend the Week 9 meeting 
+
+Attendance: 
+ - All other group members present 
+
+Agenda: 
+ 1. Establish GitHub repo and make sure it is accessible to all group members
+ 2. Brainstorm ideas for project
+ 3. Refine idea down into one final project 
+ 4. Listen to Andre's advice 
+ 5. Test hardware 
+
+
+Establishing GitHub Repo: 
+ - Repo has been created, with folders for code and minutes  
+ - Members who have accessed the repo: 
+    - Taj
+    - Ethan 
+    - Josh 
+    - Will 
+
+
+Brainstorming: 
+ - Initial idea ~ device to assist the visually impaired with shopping
+	- ruled out because we do not have the hardware to implement a 
+          portion of the idea 
+ - Idea ~ hardware mounted on mobile cleaning device (akin to a Roomba)
+        - ruled out cleaning element due to prior existence of concept 
+ - Idea ~ hardware mounted in shopping cart to act as a mobile barcode 
+   scanner
+	- ruled out due to difficulty implementing barcode scanner with LIDAR
+ - Idea ~ mobile shopping cart that follows user (room to implement barcode
+   scanner as well)
+
+
+Refined Idea: 
+ - Mobile shopping cart that follows user.
+	- Use gyroscope to check if upright 
+	- Use accelerometer to check speed / movement 
+	- Use magnometer/LIDAR to check distance from customer 
+	- Room to incorporate barcode scanner if time to extend concept
+
+
+Potential Interfacing: 
+ - Can interface with Matlab to produce an image plot that reflects what the 
+   LIDAR sensor sees. 
+
+
+Andre's Advice: 
+ - Most importantly, DESIGN AND MODULES. 
+ - Do not overstretch on concept - pick a suitable number of modules so they 
+   are completed to a high quality. 
+ 	- Not too few modules, not too many. 
+ - Split 70/30 between CodeWarrior program and Python/Matlab etc. interfacing.
+
+
+Hardware Testing: 
+ - First hardware/cable not functional
+ - Replaced hardware and cable, now functions correctly. 
+
+
+Idea Refining: 
+ - After speaking to Andre, we have decided to remove environment detection 
+
+
+Modules: 
+ - Object detection module 
+ - Serial module (output to wheel module/python script) 
+ - Sound module (detect when close) 
+ - Visual interface (maybe display distance etc) 
+ - Tracking module (gyroscope - pan/tilt)
+ - Status/motion module (upright, moving)
+
+
+Plan Before Next Lab: 
+ - Establish design requirements for each module
+ - Write some pseudocode for each module 
+ - Determine I/O for each module
+ - Create a functional block diagram for the system 
+
+
+Roles Over the Next Week: 
+ - Taj: tracking module 
+ - Will: serial module 
+ - Ethan: sound and visual interface modules 
+ - Josh: object detection module 
+ - Joon: status/motion module
