@@ -1,0 +1,52 @@
+Week 10 Minutes 
+
+Absences: 
+ - N/A
+
+Attendance: 
+ - All members in attendance
+
+Other notes: 
+ - Josh and Taj arrived late, progress delayed by 20 mins.
+
+Agenda: 
+ - Review each member's pseudocode 
+ - Go over I/O 
+ - Review FBD 
+ - Start work on coding 
+
+Review each member's pseudocode: 
+ - Reviewed serial module, clear understanding of what must be done 
+ - Reviewed visual/sound module, clear understanding of module 
+ - Reviewed status/motion module, some discussion (as Joon absent last week) 
+   but clear on what must be done to implement.
+ - Reviewed object detection module
+	- much discussion about what LIDAR gives 
+	- spoke with Andre about method to use
+	- clarified how LIDAR passes information 
+ - Did not review object tracking module
+
+Review I/O: 
+ - Short discussion on modularity
+ - Covered what each module will receive/pass from/to other modules. 
+
+Review FBD: 
+ - Not done 
+
+Start work on coding: 
+ - All members considering how to store data and what rough process to use 
+ - Most data will be stored in structs that can be accessed by any module
+
+Plan Before Next Lab: 
+ - Have serial module working 
+ - Have visual module working 
+ - Have object detection partly operational
+ - Have tracking/control module operational
+ - Have software/math element of status module complete 
+
+Roles Over Next Week: 
+ - Will: serial 
+ - Ethan: visual 
+ - Taj: object detection
+ - Josh: tracking/control
+ - Joon: status/gyro
