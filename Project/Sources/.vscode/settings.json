@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "vector3.h": "c",
+        "derivative.h": "c"
+    }
+}
