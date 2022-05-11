@@ -42,8 +42,6 @@ void main(void) {
 	
 	// Print welcome message
 	outputMessage(sci1SerialBuffer, WELCOME_MESSAGE);
-	// Clear output buffer
-  memset(sci1SerialBuffer,0,strlen(sci1SerialBuffer));
 	
 	
   for(;;) { // Infinite loop

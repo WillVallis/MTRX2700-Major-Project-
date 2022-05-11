@@ -39,10 +39,10 @@ Plan Before Next Lab:
  - Have sound module working
  - Have distance measurement module done
  - Further progress on all other modules or finished if possible
- - ....
+ - Have serial module functioning (so it can take in generic command + output generic message)
 
 Roles Over Next Week: 
- - Will:  
+ - Will: Finish serial module, help with object detection module if needed  
  - Ethan: Work on sound module 
  - Taj: Will do further work and testing on object detection module
  - Josh: 
