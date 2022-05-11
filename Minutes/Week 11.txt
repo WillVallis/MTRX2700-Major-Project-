@@ -1,0 +1,49 @@
+Week 11 Minutes 
+
+Absences: 
+ - Will
+
+Attendance: 
+ - Joon, Josh, Ethan, Taj
+
+Other notes: 
+ - N/A
+
+Agenda: 
+ - Review and progress on last weeks task
+ - Re-discussion of how modules will work now that we've made some progress
+ - Test visual module on hardware 
+ - Do some more coding on modules in progress
+ - Discuss tasks for next week 
+
+Review each member's modules: 
+ - Taj, Joon, and Josh have made some progress on their modules
+ - Will has mostly finished work on the serial module
+ - Ethan has mostly finished visual module, just need to test on hardware
+
+Re-discussion of how modules will work: 
+ - Further discussed how modules should work and what inputs we'll need.
+ - Discussed that the visual module should have the additional functionality 
+   of displaying error message. 
+
+Test visual module on hardware: 
+ - Initially didn't work
+ - Got it to work plus added function to display error message 
+
+Do some more coding on modules: 
+ - Touched up visual module
+ - Did some research for measuring distance module
+ - Did some further coding on distance detection module 
+
+Plan Before Next Lab: 
+ - Have sound module working
+ - Have distance measurement module done
+ - Further progress on all other modules or finished if possible
+ - ....
+
+Roles Over Next Week: 
+ - Will:  
+ - Ethan: Work on sound module 
+ - Taj: Will do further work and testing on object detection module
+ - Josh: 
+ - Joon: 
