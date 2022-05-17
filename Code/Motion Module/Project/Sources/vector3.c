@@ -62,9 +62,15 @@ Vector3 vector3_offset_scalar(Vector3 vector, float x, float y, float z) {
     return offset_vector;
 }
 
+Vector3 vector3_offset_vector(Vector3 vector, Vector3 offset) {
+    Vector3 offset_vector;
 
+    offset_vector.x = vector.x + offset.x;
+    offset_vector.y = vector.y + offset.y;
+    offset_vector.z = vector.z + offset.z;
 
-Vector3 vector3_offset_vector(Vector3 vector, Vector3 offset);
+    return offset_vector;
+}
 
 // Vector3 vector3_get_rotation(Vector3 vector){
 
@@ -73,4 +79,15 @@ Vector3 vector3_offset_vector(Vector3 vector, Vector3 offset);
 
 float vector3_get_length(Vector3 vector) {
     return sqrtf(vector.x*vector.x + vector.y*vector.y + vector.z*vector.z);
+}
+
+
+Vector3 vector3i_to_vector3(Vector3i ivec) {
+    Vector3 float_vector;
+
+    float_vector.x = (float)ivec.x;
+    float_vector.y = (float)ivec.y;
+    float_vector.z = (float)ivec.z;
+    
+    return float_vector;
 }

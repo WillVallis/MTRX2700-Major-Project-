@@ -19,4 +19,14 @@ Vector3 vector3_offset_scalar(Vector3 vector, float x, float y, float z);
 // Vector3 vector3_get_rotation(Vector3 vector);
 float vector3_get_length(Vector3 vector);
 
+// Integer version of Vector3
+typedef struct Vector3i
+{
+    int x;
+    int y;
+    int z;
+} Vector3i;
+
+Vector3 vector3i_to_vector3(Vector3i ivec);
+
 #endif
