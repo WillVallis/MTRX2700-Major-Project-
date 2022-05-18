@@ -2,6 +2,7 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "vector3.h"
+#include "motion.h"
 
 void main(void) {
   /* put your own code here */
@@ -10,6 +11,7 @@ void main(void) {
   Vector3 rotated_vector;
   Vector3 double_rotated_vector;
   float length;
+  float tilt;
 
 	EnableInterrupts;
 
@@ -21,8 +23,11 @@ void main(void) {
   double_rotated_vector = vector3_rotated(rotated_vector, rotation);
   length = vector3_get_length(double_rotated_vector);
 
+  motion_calibrate();
+  
   for(;;) {
     _FEED_COP(); /* feeds the dog */
+    tilt = get_tilt_angle();
   } /* loop forever */
   /* please make sure that you never leave main */
 }

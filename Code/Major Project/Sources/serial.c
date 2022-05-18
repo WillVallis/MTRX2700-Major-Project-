@@ -17,8 +17,6 @@ void outputMessage(SerialBuffer *serialBuffer, char *msg) {
         i++;
     }
     
-
-    
     serialBuffer->outputReady = 1; // Mark the buffer to be ready to send an output
     SCI1CR2 |= SCI1CR2_SCTIE_MASK; // Enable interrupts for writing to the serial port
 }
