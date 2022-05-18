@@ -7,24 +7,24 @@
 
 
 void main(void) {
-  /* put your own code here */
-    /* char beep1[8] = "mC44C44";
-     setMusic(beep1, 0);*/
-     int threshold = 100;
-     int distance = 0;
-     int *wait;
-     int wait_time = 1;
-     //caution_beep(threshold, distance);
-      // Initialise our modules
+  //set variables
+  int threshold = 100;
+  int distance = 0;
+  int *wait;
+  int wait_time = 1;
+  
+  // Initialise our modules
   initTimer(); 
   initMusic();
 
 	EnableInterrupts;
-	//function would theorectically work with the commented out lines in practice
+	/*function would theorectically work by using function to repeatedly 
+	get distance as well as the other measurements
+	then there would be an if statement calling function if threshold is met*/
+	
+	//to demonstrate function
   while(distance <= threshold){
     caution_beep(threshold, distance, &wait);
-    //wait_time = *wait;
-    //delay(wait_time);
     distance += 1;
     } 
   for(;;) {
