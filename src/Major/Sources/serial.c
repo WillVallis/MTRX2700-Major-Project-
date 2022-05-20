@@ -70,6 +70,7 @@ __interrupt void sci1Interrupt(void) {
             sci1SerialBuffer->inputWriteIndex = 0; // Reset index for the input buffer for the next time we read
             // Mark the input buffer to be ready to be read
             sci1SerialBuffer->inputReady = 1;
+            sci1SerialBuffer->stringLength = i;
         }
     }
     else if (status & SCI1SR1_TDRE_MASK) { // Data is transmittable

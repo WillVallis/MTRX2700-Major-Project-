@@ -21,6 +21,7 @@ typedef struct SerialBuffer {
   char echoChar; // Character to echo back into the terminal
   
   char *inputString; // Copy of input buffer for safe(ish) use with commands
+  int stringLength; // Length of input string 
 } SerialBuffer;                  
 
 void outputMessage(SerialBuffer *serialBuffer, char *msg);
