@@ -17,6 +17,7 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "iic.h"
+#include "timer.h"
 
 #define IIC_TIMEOUT_ITERATIONS 10
 
@@ -293,7 +294,8 @@ void Init_TC7 (void) {
   TIOS_IOS7 = 1;   // set channel 7 to output compare
     
   TCTL1_OL7 = 1;    // Output mode for ch7
-  TIE_C7I = 1;   // enable interrupt for channel 7
+  TIE_C7I = 1;   // enable interrupt for channel 7  
+    enableOutputCompare(7); 
 }
 
 

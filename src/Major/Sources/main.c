@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include "derivative.h"      /* derivative-specific definitions */
 
+#include "pll.h"
 #include "serial.h"
+#include "l3g4200d.h"
 #include "motion.h"
 #include "math.h"
 #include "ftoa.h"
@@ -14,6 +16,7 @@
 const int DIST = 'D' + 'i' + 's' + 't' + 'a' + 'n' + 'c' + 'e';
 const int ANG = 'A' + 'n' + 'g' + 'l' + 'e';
 const int STAT = 'S' + 't' + 'a' + 't' + 'u' + 's';
+const int TIPPED = 'T'+'i'+'p'+'p'+'e'+'d';
 
 
 const char UNKNOWN_COMMAND_TEMPLATE[] = "Error! Unknown command.\r";
@@ -21,6 +24,9 @@ const char WELCOME_MESSAGE[] = "Hello! The device should now be tracking you! Fe
 To check distance between user and system, enter \'D\'\n\
 To check angle from datum, enter \'A\'\n\
 To check system status, enter \'S\'\r";
+
+const char TIPPED_MESSAGE[] = "Trolley is tipped.\r";
+const char UNTIPPED_MESSAGE[] = "Trolley is upright.\r";
 
 void printUnknownCommandError(SerialBuffer *serialBuffer) {
   // Create a buffer for the output message
@@ -52,13 +58,18 @@ int calculateMessageValue (int length, char *message) {
 
 // Our main loop
 void main(void) {
-  // float tilt;
+  float tilt;
+  int tipped = 0;
+  Vector3i raw;
 
   // Initialise the serial port and create a buffer object for it
   SerialBuffer *sci1SerialBuffer = sci1Init(9600);
 
-  // Initialise our modules
-  initTimer();
+  // Initialise our modules            
+  PLL_Init();
+  initTimer();  
+  initMotion();        
+  _DISABLE_COP();
   
 
 
@@ -67,10 +78,9 @@ void main(void) {
 	// Print welcome message
 	outputMessage(sci1SerialBuffer, WELCOME_MESSAGE);
 	
-	//motion_calibrate();
+	motion_calibrate();
 	
   for(;;) { // Infinite loop
-    _FEED_COP(); 
 
     if (sci1SerialBuffer->inputReady) { // Check if we have a new command
       // User input is formatted as a single command character follwed by parameters
@@ -86,9 +96,17 @@ void main(void) {
           break;
         }
         case ANG: { // Angle
-          //tilt = get_tilt_angle();
-          //ftoa(tilt, message, 4);
+          tilt = get_gyro().x;
+          ftoa(tilt, message, 3);
+          //getRawDataGyro(&raw);
+          //itostr(raw.x, message, 8);
           outputMessage(sci1SerialBuffer, message);
+          break;
+        }
+        case TIPPED: { // Angle
+          tilt =  motion_check_tipped_over();
+          if (tilt) outputMessage(sci1SerialBuffer, TIPPED_MESSAGE);
+          else outputMessage(sci1SerialBuffer, UNTIPPED_MESSAGE);
           break;
         }
         case STAT : { // Status 

@@ -2,6 +2,7 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "serial.h"
+#include "iic.h"
 
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
@@ -62,7 +63,7 @@ const tIsrFunc _vect[] @0xFF80 = {     /* Interrupt table */
         UnimplementedISR,                 /* vector 0x12 */
         UnimplementedISR,                 /* vector 0x11 */
         UnimplementedISR,                 /* vector 0x10 (TOF) */
-        UnimplementedISR,                 /* vector 0x0F (TIE, C7I)  */
+        TC7_ISR,                 /* vector 0x0F (TIE, C7I)  */
         UnimplementedISR,                 /* vector 0x0E (TIE, C6I)  */
         UnimplementedISR,                 /* vector 0x0C (TIE, C5I)  */
         UnimplementedISR,                 /* vector 0x0C (TIE, C4I)  */

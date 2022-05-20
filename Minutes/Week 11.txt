@@ -46,4 +46,4 @@ Roles Over Next Week:
  - Ethan: Work on sound module 
  - Taj: Will do further work and testing on object detection module
  - Josh: 
- - Joon: 
+ - Joon: Try to get it working on hardware, test next meeting.

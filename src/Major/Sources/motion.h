@@ -9,6 +9,8 @@ typedef struct SystemState {
     float accel_scale;
 } SystemState;
 
+void initMotion();
+
 void motion_calibrate();
 
 Vector3 get_gyro();

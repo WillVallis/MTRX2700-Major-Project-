@@ -99,7 +99,7 @@ IIC_ERRORS getRawDataGyro(Vector3i *raw_data)
 
 
 // Initialise each sensor
-IIC_ERRORS sensorInit(void)
+IIC_ERRORS iicSensorInit(void)
 {
    volatile IIC_ERRORS error_code = NO_ERROR;
    
