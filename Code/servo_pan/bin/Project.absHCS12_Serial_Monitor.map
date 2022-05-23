@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\tajwe\Documents\1. University\Classes\2022\MTRX2700\servo_pan\bin\Project.absHCS12_Serial_Monitor.abs"
+PROGRAM "C:\Users\silla\OneDrive\Documents\GitHub\MTRX2700-Major-Project-\Code\servo_pan\bin\Project.absHCS12_Serial_Monitor.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -28,6 +28,7 @@ servo.c.o                               Model: BANKED,        Lang: ANSI-C
 isr_vectors.c.o                         Model: BANKED,        Lang: ANSI-C
 pll.c.o                                 Model: BANKED,        Lang: ANSI-C
 laser.c.o                               Model: BANKED,        Lang: ANSI-C
+tracking.c.o                            Model: BANKED,        Lang: ANSI-C
 iic.c.o                                 Model: BANKED,        Lang: ANSI-C
 simple_serial.c.o                       Model: BANKED,        Lang: ANSI-C
 l3g4200d.c.o                            Model: BANKED,        Lang: ANSI-C
@@ -39,8 +40,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC015 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1100     51
-  _Copy    *toCopyDownBeg 0xC607
+  _Range   pZeroOut       0x2000     57
+  _Copy    *toCopyDownBeg 0xC650
 } _startupData;
 
 *********************************************************************************************
@@ -50,12 +51,12 @@ Section Name                    Size  Type     From       To       Segment
 .init                             21     R     0xC000     0xC014   ROM_C000
 .startData                        10     R     0xC015     0xC01E   ROM_C000
 .rodata                          212     R     0xC01F     0xC0F2   ROM_C000
-.rodata1                          22     R     0xC0F3     0xC108   ROM_C000
-NON_BANKED                      1278     R     0xC109     0xC606   ROM_C000
-.copy                             24     R     0xC607     0xC61E   ROM_C000
-.text                           3283     R   0x308000   0x308CD2   PAGE_30
-.stack                           256   R/W     0x1000     0x10FF   RAM
-.data                             20   R/W     0x1100     0x1113   RAM
+.rodata1                          64     R     0xC0F3     0xC132   ROM_C000
+NON_BANKED                      1309     R     0xC133     0xC64F   ROM_C000
+.copy                             26     R     0xC650     0xC669   ROM_C000
+.text                           3699     R   0x308000   0x308E72   PAGE_30
+.stack                          4096   R/W     0x1000     0x1FFF   RAM
+.data                             22   R/W     0x2000     0x2015   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -398,12 +399,12 @@ NON_BANKED                      1278     R     0xC109     0xC606   ROM_C000
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
 .abs_section_ff80                126     R     0xFF80     0xFFFD   .absSeg341
-.bss                              31   R/W     0x1114     0x1132   RAM
+.bss                              35   R/W     0x2016     0x2038   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        1372 (dec:     4978)
-READ_WRITE (R/W):      133 (dec:      307)
+READ_ONLY (R):        155D (dec:     5469)
+READ_WRITE (R/W):     1039 (dec:     4153)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -762,162 +763,174 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000      5D      93       2   .text       
+     main                                    308000      EF     239       3   .text       
 - VARIABLES:
      STRING.NO_ERROR...9                       C0F3       B      11       1   .rodata1    
      STRING.ERROR..d...10                      C0FE       B      11       1   .rodata1    
+     STRING..lu..lu..lu..lu..lu..11            C109      2A      42       1   .rodata1    
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    30805D      29      41       2   .text       
+     Init                                    3080EF      29      41       2   .text       
      _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
      _startupData                              C015       6       6       3   .startData  
 - LABELS:
-     __SEG_END_SSTACK                          1100       0       0       1               
+     __SEG_END_SSTACK                          2000       0       0       1               
 MODULE:                 -- PRINTF.C.o (ansib.lib) --
 - PROCEDURES:
-     Ten                                     308086      AC     172       5   .text       
-     vprintf                                 308132     933    2355     128   .text       
-     _out                                    308A65       C      12       2   .text       
-     deposit_char                            308A71       F      15       3   .text       
-     sprintf                                 308A80      2F      47       2   .text       
+     Ten                                     308118      AC     172       5   .text       
+     vprintf                                 3081C4     933    2355     128   .text       
+     _out                                    308AF7       C      12       2   .text       
+     deposit_char                            308B03       F      15       3   .text       
+     sprintf                                 308B12      2F      47       4   .text       
 - VARIABLES:
      pow10                                     C01F      28      40       6   .rodata     
      pow16                                     C047      20      32       4   .rodata     
      pow8                                      C067      2C      44       4   .rodata     
      fpow10                                    C093      30      48       1   .rodata     
      fpow_10                                   C0C3      30      48       1   .rodata     
-     pbuf                                      1114       7       7      16   .bss        
+     pbuf                                      2016       7       7      16   .bss        
 MODULE:                 -- FADD.C.o (ansib.lib) --
 - PROCEDURES:
-     F_ADDKL                                   C109      67     103       1   NON_BANKED  
-     _FADD                                     C170      15      21       3   NON_BANKED  
-     _FSUB                                     C185      13      19       1   NON_BANKED  
-     _FNEG                                     C198       B      11       1   NON_BANKED  
+     F_ADDKL                                   C133      67     103       1   NON_BANKED  
+     _FADD                                     C19A      15      21       3   NON_BANKED  
+     _FSUB                                     C1AF      13      19       1   NON_BANKED  
+     _FNEG                                     C1C2       B      11       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FANSI.C.o (ansib.lib) --
 - PROCEDURES:
-     F_FREXP                                   C1A3      1F      31       1   NON_BANKED  
-     frexpf                                    C1C2      19      25       1   NON_BANKED  
+     F_FREXP                                   C1CD      1F      31       1   NON_BANKED  
+     frexpf                                    C1EC      19      25       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FCMP.C.o (ansib.lib) --
 - PROCEDURES:
-     _FCMP                                     C1DB      26      38       2   NON_BANKED  
+     _FCMP                                     C205      26      38       2   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FCONV.C.o (ansib.lib) --
 - PROCEDURES:
-     F_TOLONGK                                 C201      33      51       1   NON_BANKED  
-     F_FRLONGK                                 C234      1F      31       1   NON_BANKED  
-     _FUFLOAT                                  C253      12      18       1   NON_BANKED  
-     _FSTRUNC                                  C265      11      17       1   NON_BANKED  
-     _FUTRUNC                                  C276       3       3       2   NON_BANKED  
+     F_TOLONGK                                 C22B      33      51       1   NON_BANKED  
+     F_FRLONGK                                 C25E      1F      31       1   NON_BANKED  
+     _FUFLOAT                                  C27D      12      18       1   NON_BANKED  
+     _FSTRUNC                                  C28F      11      17       1   NON_BANKED  
+     _FUTRUNC                                  C2A0       3       3       2   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FMUL.C.o (ansib.lib) --
 - PROCEDURES:
-     F_MULKL                                   C279      58      88       1   NON_BANKED  
-     _FMUL                                     C2D1      14      20       7   NON_BANKED  
+     F_MULKL                                   C2A3      58      88       1   NON_BANKED  
+     _FMUL                                     C2FB      14      20       7   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- FREGS.C.o (ansib.lib) --
 - PROCEDURES:
-     F_PULK                                    C2E5      15      21       3   NON_BANKED  
-     F_PULL                                    C2FA      15      21       3   NON_BANKED  
-     F_PSHK                                    C30F      13      19       4   NON_BANKED  
-     F_TLK                                     C322       D      13       1   NON_BANKED  
-     F_XGKL                                    C32F      21      33       2   NON_BANKED  
-     F_CLRK                                    C350       B      11       2   NON_BANKED  
-     F_MAXK                                    C35B       9       9       1   NON_BANKED  
-     F_NORMK                                   C364      3E      62       3   NON_BANKED  
+     F_PULK                                    C30F      15      21       3   NON_BANKED  
+     F_PULL                                    C324      15      21       3   NON_BANKED  
+     F_PSHK                                    C339      13      19       4   NON_BANKED  
+     F_TLK                                     C34C       D      13       1   NON_BANKED  
+     F_XGKL                                    C359      21      33       2   NON_BANKED  
+     F_CLRK                                    C37A       B      11       2   NON_BANKED  
+     F_MAXK                                    C385       9       9       1   NON_BANKED  
+     F_NORMK                                   C38E      3E      62       3   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- rtshc12.c.o (ansib.lib) --
 - PROCEDURES:
-     _BDIVMODS                                 C3A2       B      11       3   NON_BANKED  
-     _LCMP_P                                   C3AD      15      21       3   NON_BANKED  
-     _LNEG                                     C3C2       D      13       1   NON_BANKED  
-     _LINC                                     C3CF       5       5       1   NON_BANKED  
-     _LDEC                                     C3D4       8       8       1   NON_BANKED  
-     _lDivMod                                  C3DC      BE     190       2   NON_BANKED  
-     _LDIVU                                    C49A       E      14       1   NON_BANKED  
-     _NEG_P                                    C4A8       F      15       1   NON_BANKED  
-     _LMODU                                    C4B7      11      17       1   NON_BANKED  
-     _ILSEXT                                   C4C8       7       7       2   NON_BANKED  
-     _CASE_DIRECT_BYTE                         C4CF       5       5       1   NON_BANKED  
-     _CASE_CHECKED_BYTE                        C4D4      14      20       1   NON_BANKED  
-     _CASE_SEARCH_8                            C4E8      17      23       1   NON_BANKED  
-     _CASE_SEARCH_8_BYTE                       C4FF      1A      26       1   NON_BANKED  
+     _BDIVMODS                                 C3CC       B      11       3   NON_BANKED  
+     _LCMP_P                                   C3D7      15      21       5   NON_BANKED  
+     _LNEG                                     C3EC       D      13       2   NON_BANKED  
+     _LINC                                     C3F9       5       5       1   NON_BANKED  
+     _LDEC                                     C3FE       8       8       1   NON_BANKED  
+     _LMULS16x32                               C406      1F      31       1   NON_BANKED  
+     _lDivMod                                  C425      BE     190       2   NON_BANKED  
+     _LDIVU                                    C4E3       E      14       3   NON_BANKED  
+     _NEG_P                                    C4F1       F      15       1   NON_BANKED  
+     _LMODU                                    C500      11      17       1   NON_BANKED  
+     _ILSEXT                                   C511       7       7       4   NON_BANKED  
+     _CASE_DIRECT_BYTE                         C518       5       5       1   NON_BANKED  
+     _CASE_CHECKED_BYTE                        C51D      14      20       1   NON_BANKED  
+     _CASE_SEARCH_8                            C531      17      23       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       C548      1A      26       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- VREGS.C.o (ansib.lib) --
 - PROCEDURES:
-     L_NEGK                                    C519       7       7       1   NON_BANKED  
-     L_PSHK                                    C520       8       8       1   NON_BANKED  
-     UL_PULK                                   C528       3       3       1   NON_BANKED  
+     L_NEGK                                    C562       7       7       1   NON_BANKED  
+     L_PSHK                                    C569       8       8       1   NON_BANKED  
+     UL_PULK                                   C571       3       3       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- servo.c.o --
 - PROCEDURES:
-     PWMinitialise                           308AAF      27      39       2   .text       
-     setServoPose                            308AD6       D      13       4   .text       
-     Init_TC6                                308AE3      13      19       2   .text       
-     TC6_ISR                                   C52B      5E      94       1   NON_BANKED  
+     PWMinitialise                           308B41      27      39       2   .text       
+     setServoPose                            308B68       D      13       4   .text       
+     Init_TC6                                308B75      13      19       2   .text       
+     TC6_ISR                                   C574      5E      94       1   NON_BANKED  
 - VARIABLES:
-     iterator_counter                          111B       4       4      11   .bss        
-     toggle                                    111F       2       2       2   .bss        
+     iterator_counter                          201D       4       4      11   .bss        
+     toggle                                    2021       2       2       2   .bss        
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
-     UnimplementedISR                          C589       A      10      59   NON_BANKED  
-     SoftwareInterrupt                         C593       6       6       1   NON_BANKED  
+     UnimplementedISR                          C5D2       A      10      59   NON_BANKED  
+     SoftwareInterrupt                         C5DC       6       6       1   NON_BANKED  
 - VARIABLES:
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- pll.c.o --
 - PROCEDURES:
-     PLL_Init                                308AF6      15      21       2   .text       
+     PLL_Init                                308B88      15      21       2   .text       
 - VARIABLES:
 MODULE:                 -- laser.c.o --
 - PROCEDURES:
-     laserInit                               308B0B      13      19       2   .text       
-     TC1_ISR                                   C599      47      71       1   NON_BANKED  
+     laserInit                               308B9D      13      19       2   .text       
+     GetLatestLaserSample                    308BB0       D      13       2   .text       
+     TC1_ISR                                   C5E2      47      71       1   NON_BANKED  
 - VARIABLES:
-     riseEdge                                  1121       4       4       7   .bss        
-     fallEdge                                  1125       4       4       6   .bss        
-     lastLaserSample                           1129       4       4       2   .bss        
+     riseEdge                                  2023       4       4       7   .bss        
+     fallEdge                                  2027       4       4       6   .bss        
+     lastLaserSample                           202B       4       4       4   .bss        
+MODULE:                 -- tracking.c.o --
+- PROCEDURES:
+     update_laser                            308BBD      4E      78       2   .text       
+     track_object                            308C0B      7B     123       2   .text       
+     find_av                                 308C86      38      56       4   .text       
+- VARIABLES:
+     max_count                                 2000       2       2       4   .data       
+     laser_count                               202F       2       2       4   .bss        
+     delay_count                               2031       2       2       4   .bss        
 MODULE:                 -- iic.c.o --
 - PROCEDURES:
-     iicinit                                 308B1E      1C      28       2   .text       
-     iic_send_data                           308B3A      2E      46       6   .text       
-     iicresponse                             308B68      2E      46       4   .text       
-     iicstart                                308B96      42      66       2   .text       
-     iicstop                                 308BD8       4       4       6   .text       
-     iictransmit                             308BDC       B      11       2   .text       
-     setAlarm                                308BE7      17      23       6   .text       
-     Init_TC7                                308BFE      10      16       2   .text       
-     TC7_ISR                                   C5E0      27      39       1   NON_BANKED  
+     iicinit                                 308CBE      1C      28       2   .text       
+     iic_send_data                           308CDA      2E      46       6   .text       
+     iicresponse                             308D08      2E      46       4   .text       
+     iicstart                                308D36      42      66       2   .text       
+     iicstop                                 308D78       4       4       6   .text       
+     iictransmit                             308D7C       B      11       2   .text       
+     setAlarm                                308D87      17      23       6   .text       
+     Init_TC7                                308D9E      10      16       2   .text       
+     TC7_ISR                                   C629      27      39       1   NON_BANKED  
 - VARIABLES:
-     alarmSignaled                             112D       1       1       8   .bss        
-     currentTime                               112E       2       2       5   .bss        
-     alarmTime                                 1130       2       2       2   .bss        
-     alarmSet                                  1132       1       1       3   .bss        
+     alarmSignaled                             2033       1       1       8   .bss        
+     currentTime                               2034       2       2       5   .bss        
+     alarmTime                                 2036       2       2       2   .bss        
+     alarmSet                                  2038       1       1       3   .bss        
 MODULE:                 -- simple_serial.c.o --
 - PROCEDURES:
-     SerialInitialise                        308C0E      42      66       2   .text       
-     SerialOutputChar                        308C50      11      17       2   .text       
-     SerialOutputString                      308C61      19      25       2   .text       
+     SerialInitialise                        308DAE      42      66       2   .text       
+     SerialOutputChar                        308DF0      11      17       2   .text       
+     SerialOutputString                      308E01      19      25       4   .text       
 - VARIABLES:
-     SCI1                                      1100       C      12       2   .data       
+     SCI1                                      2002       C      12       3   .data       
 MODULE:                 -- l3g4200d.c.o --
 - PROCEDURES:
-     iicSensorInit                           308C7A      29      41       2   .text       
-     accel_init                              308CA3      10      16       2   .text       
-     gyro_init                               308CB3      10      16       2   .text       
-     magnet_init                             308CC3      10      16       2   .text       
+     iicSensorInit                           308E1A      29      41       2   .text       
+     accel_init                              308E43      10      16       2   .text       
+     gyro_init                               308E53      10      16       2   .text       
+     magnet_init                             308E63      10      16       2   .text       
 - VARIABLES:
-     accelerometer_cfg                         110C       4       4       1   .data       
-     gyro_cfg                                  1110       2       2       1   .data       
-     mag_cfg                                   1112       2       2       1   .data       
+     accelerometer_cfg                         200E       4       4       1   .data       
+     gyro_cfg                                  2012       2       2       1   .data       
+     mag_cfg                                   2014       2       2       1   .data       
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                     0     93     22
+  main.c.o                                     0    239     64
   Start12.c.o                                  0     62      0
   PRINTF.C.o (ansib.lib)                       7   2601    212
   FADD.C.o (ansib.lib)                         0    154      0
@@ -926,43 +939,45 @@ MODULE STATISTIC
   FCONV.C.o (ansib.lib)                        0    120      0
   FMUL.C.o (ansib.lib)                         0    108      0
   FREGS.C.o (ansib.lib)                        0    189      0
-  rtshc12.c.o (ansib.lib)                      0    375      0
+  rtshc12.c.o (ansib.lib)                      0    406      0
   VREGS.C.o (ansib.lib)                        0     18      0
   servo.c.o                                    6    165      0
   isr_vectors.c.o                              0     16    126
   pll.c.o                                      0     21      0
-  laser.c.o                                   12     90      0
+  laser.c.o                                   12    103      0
+  tracking.c.o                                 6    257      0
   iic.c.o                                      6    279      0
   simple_serial.c.o                           12    108      0
   l3g4200d.c.o                                 8     89      0
-  other                                      256     12     24
+  other                                     4096     12     26
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   main Init Ten vprintf _out deposit_char sprintf PWMinitialise setServoPose 
-  Init_TC6 PLL_Init laserInit iicinit iic_send_data iicresponse iicstart 
-  iicstop iictransmit setAlarm Init_TC7 SerialInitialise SerialOutputChar 
-  SerialOutputString iicSensorInit accel_init gyro_init magnet_init 
+  Init_TC6 PLL_Init laserInit GetLatestLaserSample update_laser track_object 
+  find_av iicinit iic_send_data iicresponse iicstart iicstop iictransmit 
+  setAlarm Init_TC7 SerialInitialise SerialOutputChar SerialOutputString 
+  iicSensorInit accel_init gyro_init magnet_init 
 SECTION: ".data"
-  SCI1 accelerometer_cfg gyro_cfg mag_cfg 
+  max_count SCI1 accelerometer_cfg gyro_cfg mag_cfg 
 SECTION: ".bss"
-  pbuf iterator_counter toggle riseEdge fallEdge lastLaserSample alarmSignaled 
-  currentTime alarmTime alarmSet 
+  pbuf iterator_counter toggle riseEdge fallEdge lastLaserSample laser_count 
+  delay_count alarmSignaled currentTime alarmTime alarmSet 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata"
   pow10 pow16 pow8 fpow10 fpow_10 
 SECTION: ".rodata1"
-  STRING.NO_ERROR...9 STRING.ERROR..d...10 
+  STRING.NO_ERROR...9 STRING.ERROR..d...10 STRING..lu..lu..lu..lu..lu..11 
 SECTION: "NON_BANKED"
   F_ADDKL _FADD _FSUB _FNEG F_FREXP frexpf _FCMP F_TOLONGK F_FRLONGK _FUFLOAT 
   _FSTRUNC _FUTRUNC F_MULKL _FMUL F_PULK F_PULL F_PSHK F_TLK F_XGKL F_CLRK 
-  F_MAXK F_NORMK _BDIVMODS _LCMP_P _LNEG _LINC _LDEC _lDivMod _LDIVU _NEG_P 
-  _LMODU _ILSEXT _CASE_DIRECT_BYTE _CASE_CHECKED_BYTE _CASE_SEARCH_8 
-  _CASE_SEARCH_8_BYTE L_NEGK L_PSHK UL_PULK TC6_ISR UnimplementedISR 
-  SoftwareInterrupt TC1_ISR TC7_ISR 
+  F_MAXK F_NORMK _BDIVMODS _LCMP_P _LNEG _LINC _LDEC _LMULS16x32 _lDivMod 
+  _LDIVU _NEG_P _LMODU _ILSEXT _CASE_DIRECT_BYTE _CASE_CHECKED_BYTE 
+  _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE L_NEGK L_PSHK UL_PULK TC6_ISR 
+  UnimplementedISR SoftwareInterrupt TC1_ISR TC7_ISR 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1993,20 +2008,23 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     SCI1                                      1100       C      12       2   .data       
-     accelerometer_cfg                         110C       4       4       1   .data       
-     gyro_cfg                                  1110       2       2       1   .data       
-     mag_cfg                                   1112       2       2       1   .data       
-     pbuf                                      1114       7       7      16   .bss        
-     iterator_counter                          111B       4       4      11   .bss        
-     toggle                                    111F       2       2       2   .bss        
-     riseEdge                                  1121       4       4       7   .bss        
-     fallEdge                                  1125       4       4       6   .bss        
-     lastLaserSample                           1129       4       4       2   .bss        
-     alarmSignaled                             112D       1       1       8   .bss        
-     currentTime                               112E       2       2       5   .bss        
-     alarmTime                                 1130       2       2       2   .bss        
-     alarmSet                                  1132       1       1       3   .bss        
+     max_count                                 2000       2       2       4   .data       
+     SCI1                                      2002       C      12       3   .data       
+     accelerometer_cfg                         200E       4       4       1   .data       
+     gyro_cfg                                  2012       2       2       1   .data       
+     mag_cfg                                   2014       2       2       1   .data       
+     pbuf                                      2016       7       7      16   .bss        
+     iterator_counter                          201D       4       4      11   .bss        
+     toggle                                    2021       2       2       2   .bss        
+     riseEdge                                  2023       4       4       7   .bss        
+     fallEdge                                  2027       4       4       6   .bss        
+     lastLaserSample                           202B       4       4       4   .bss        
+     laser_count                               202F       2       2       4   .bss        
+     delay_count                               2031       2       2       4   .bss        
+     alarmSignaled                             2033       1       1       8   .bss        
+     currentTime                               2034       2       2       5   .bss        
+     alarmTime                                 2036       2       2       2   .bss        
+     alarmSet                                  2038       1       1       3   .bss        
      _Startup                                  C000      15      21       0   .init       
      pow10                                     C01F      28      40       6   .rodata     
      pow16                                     C047      20      32       4   .rodata     
@@ -2015,78 +2033,84 @@ OBJECT LIST SORTED BY ADDRESS
      fpow_10                                   C0C3      30      48       1   .rodata     
      STRING.NO_ERROR...9                       C0F3       B      11       1   .rodata1    
      STRING.ERROR..d...10                      C0FE       B      11       1   .rodata1    
-     F_ADDKL                                   C109      67     103       1   NON_BANKED  
-     _FADD                                     C170      15      21       3   NON_BANKED  
-     _FSUB                                     C185      13      19       1   NON_BANKED  
-     _FNEG                                     C198       B      11       1   NON_BANKED  
-     F_FREXP                                   C1A3      1F      31       1   NON_BANKED  
-     frexpf                                    C1C2      19      25       1   NON_BANKED  
-     _FCMP                                     C1DB      26      38       2   NON_BANKED  
-     F_TOLONGK                                 C201      33      51       1   NON_BANKED  
-     F_FRLONGK                                 C234      1F      31       1   NON_BANKED  
-     _FUFLOAT                                  C253      12      18       1   NON_BANKED  
-     _FSTRUNC                                  C265      11      17       1   NON_BANKED  
-     _FUTRUNC                                  C276       3       3       2   NON_BANKED  
-     F_MULKL                                   C279      58      88       1   NON_BANKED  
-     _FMUL                                     C2D1      14      20       7   NON_BANKED  
-     F_PULK                                    C2E5      15      21       3   NON_BANKED  
-     F_PULL                                    C2FA      15      21       3   NON_BANKED  
-     F_PSHK                                    C30F      13      19       4   NON_BANKED  
-     F_TLK                                     C322       D      13       1   NON_BANKED  
-     F_XGKL                                    C32F      21      33       2   NON_BANKED  
-     F_CLRK                                    C350       B      11       2   NON_BANKED  
-     F_MAXK                                    C35B       9       9       1   NON_BANKED  
-     F_NORMK                                   C364      3E      62       3   NON_BANKED  
-     _BDIVMODS                                 C3A2       B      11       3   NON_BANKED  
-     _LCMP_P                                   C3AD      15      21       3   NON_BANKED  
-     _LNEG                                     C3C2       D      13       1   NON_BANKED  
-     _LINC                                     C3CF       5       5       1   NON_BANKED  
-     _LDEC                                     C3D4       8       8       1   NON_BANKED  
-     _lDivMod                                  C3DC      BE     190       2   NON_BANKED  
-     _LDIVU                                    C49A       E      14       1   NON_BANKED  
-     _NEG_P                                    C4A8       F      15       1   NON_BANKED  
-     _LMODU                                    C4B7      11      17       1   NON_BANKED  
-     _ILSEXT                                   C4C8       7       7       2   NON_BANKED  
-     _CASE_DIRECT_BYTE                         C4CF       5       5       1   NON_BANKED  
-     _CASE_CHECKED_BYTE                        C4D4      14      20       1   NON_BANKED  
-     _CASE_SEARCH_8                            C4E8      17      23       1   NON_BANKED  
-     _CASE_SEARCH_8_BYTE                       C4FF      1A      26       1   NON_BANKED  
-     L_NEGK                                    C519       7       7       1   NON_BANKED  
-     L_PSHK                                    C520       8       8       1   NON_BANKED  
-     UL_PULK                                   C528       3       3       1   NON_BANKED  
-     TC6_ISR                                   C52B      5E      94       1   NON_BANKED  
-     UnimplementedISR                          C589       A      10      59   NON_BANKED  
-     SoftwareInterrupt                         C593       6       6       1   NON_BANKED  
-     TC1_ISR                                   C599      47      71       1   NON_BANKED  
-     TC7_ISR                                   C5E0      27      39       1   NON_BANKED  
+     STRING..lu..lu..lu..lu..lu..11            C109      2A      42       1   .rodata1    
+     F_ADDKL                                   C133      67     103       1   NON_BANKED  
+     _FADD                                     C19A      15      21       3   NON_BANKED  
+     _FSUB                                     C1AF      13      19       1   NON_BANKED  
+     _FNEG                                     C1C2       B      11       1   NON_BANKED  
+     F_FREXP                                   C1CD      1F      31       1   NON_BANKED  
+     frexpf                                    C1EC      19      25       1   NON_BANKED  
+     _FCMP                                     C205      26      38       2   NON_BANKED  
+     F_TOLONGK                                 C22B      33      51       1   NON_BANKED  
+     F_FRLONGK                                 C25E      1F      31       1   NON_BANKED  
+     _FUFLOAT                                  C27D      12      18       1   NON_BANKED  
+     _FSTRUNC                                  C28F      11      17       1   NON_BANKED  
+     _FUTRUNC                                  C2A0       3       3       2   NON_BANKED  
+     F_MULKL                                   C2A3      58      88       1   NON_BANKED  
+     _FMUL                                     C2FB      14      20       7   NON_BANKED  
+     F_PULK                                    C30F      15      21       3   NON_BANKED  
+     F_PULL                                    C324      15      21       3   NON_BANKED  
+     F_PSHK                                    C339      13      19       4   NON_BANKED  
+     F_TLK                                     C34C       D      13       1   NON_BANKED  
+     F_XGKL                                    C359      21      33       2   NON_BANKED  
+     F_CLRK                                    C37A       B      11       2   NON_BANKED  
+     F_MAXK                                    C385       9       9       1   NON_BANKED  
+     F_NORMK                                   C38E      3E      62       3   NON_BANKED  
+     _BDIVMODS                                 C3CC       B      11       3   NON_BANKED  
+     _LCMP_P                                   C3D7      15      21       5   NON_BANKED  
+     _LNEG                                     C3EC       D      13       2   NON_BANKED  
+     _LINC                                     C3F9       5       5       1   NON_BANKED  
+     _LDEC                                     C3FE       8       8       1   NON_BANKED  
+     _LMULS16x32                               C406      1F      31       1   NON_BANKED  
+     _lDivMod                                  C425      BE     190       2   NON_BANKED  
+     _LDIVU                                    C4E3       E      14       3   NON_BANKED  
+     _NEG_P                                    C4F1       F      15       1   NON_BANKED  
+     _LMODU                                    C500      11      17       1   NON_BANKED  
+     _ILSEXT                                   C511       7       7       4   NON_BANKED  
+     _CASE_DIRECT_BYTE                         C518       5       5       1   NON_BANKED  
+     _CASE_CHECKED_BYTE                        C51D      14      20       1   NON_BANKED  
+     _CASE_SEARCH_8                            C531      17      23       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       C548      1A      26       1   NON_BANKED  
+     L_NEGK                                    C562       7       7       1   NON_BANKED  
+     L_PSHK                                    C569       8       8       1   NON_BANKED  
+     UL_PULK                                   C571       3       3       1   NON_BANKED  
+     TC6_ISR                                   C574      5E      94       1   NON_BANKED  
+     UnimplementedISR                          C5D2       A      10      59   NON_BANKED  
+     SoftwareInterrupt                         C5DC       6       6       1   NON_BANKED  
+     TC1_ISR                                   C5E2      47      71       1   NON_BANKED  
+     TC7_ISR                                   C629      27      39       1   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000      5D      93       2   .text       
-     Init                                    30805D      29      41       2   .text       
-     Ten                                     308086      AC     172       5   .text       
-     vprintf                                 308132     933    2355     128   .text       
-     _out                                    308A65       C      12       2   .text       
-     deposit_char                            308A71       F      15       3   .text       
-     sprintf                                 308A80      2F      47       2   .text       
-     PWMinitialise                           308AAF      27      39       2   .text       
-     setServoPose                            308AD6       D      13       4   .text       
-     Init_TC6                                308AE3      13      19       2   .text       
-     PLL_Init                                308AF6      15      21       2   .text       
-     laserInit                               308B0B      13      19       2   .text       
-     iicinit                                 308B1E      1C      28       2   .text       
-     iic_send_data                           308B3A      2E      46       6   .text       
-     iicresponse                             308B68      2E      46       4   .text       
-     iicstart                                308B96      42      66       2   .text       
-     iicstop                                 308BD8       4       4       6   .text       
-     iictransmit                             308BDC       B      11       2   .text       
-     setAlarm                                308BE7      17      23       6   .text       
-     Init_TC7                                308BFE      10      16       2   .text       
-     SerialInitialise                        308C0E      42      66       2   .text       
-     SerialOutputChar                        308C50      11      17       2   .text       
-     SerialOutputString                      308C61      19      25       2   .text       
-     iicSensorInit                           308C7A      29      41       2   .text       
-     accel_init                              308CA3      10      16       2   .text       
-     gyro_init                               308CB3      10      16       2   .text       
-     magnet_init                             308CC3      10      16       2   .text       
+     main                                    308000      EF     239       3   .text       
+     Init                                    3080EF      29      41       2   .text       
+     Ten                                     308118      AC     172       5   .text       
+     vprintf                                 3081C4     933    2355     128   .text       
+     _out                                    308AF7       C      12       2   .text       
+     deposit_char                            308B03       F      15       3   .text       
+     sprintf                                 308B12      2F      47       4   .text       
+     PWMinitialise                           308B41      27      39       2   .text       
+     setServoPose                            308B68       D      13       4   .text       
+     Init_TC6                                308B75      13      19       2   .text       
+     PLL_Init                                308B88      15      21       2   .text       
+     laserInit                               308B9D      13      19       2   .text       
+     GetLatestLaserSample                    308BB0       D      13       2   .text       
+     update_laser                            308BBD      4E      78       2   .text       
+     track_object                            308C0B      7B     123       2   .text       
+     find_av                                 308C86      38      56       4   .text       
+     iicinit                                 308CBE      1C      28       2   .text       
+     iic_send_data                           308CDA      2E      46       6   .text       
+     iicresponse                             308D08      2E      46       4   .text       
+     iicstart                                308D36      42      66       2   .text       
+     iicstop                                 308D78       4       4       6   .text       
+     iictransmit                             308D7C       B      11       2   .text       
+     setAlarm                                308D87      17      23       6   .text       
+     Init_TC7                                308D9E      10      16       2   .text       
+     SerialInitialise                        308DAE      42      66       2   .text       
+     SerialOutputChar                        308DF0      11      17       2   .text       
+     SerialOutputString                      308E01      19      25       4   .text       
+     iicSensorInit                           308E1A      29      41       2   .text       
+     accel_init                              308E43      10      16       2   .text       
+     gyro_init                               308E53      10      16       2   .text       
+     magnet_init                             308E63      10      16       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2108,15 +2132,12 @@ FREGS.C.o (ansib.lib):
   F_STAL F_TKL F_CLRL 
 rtshc12.c.o (ansib.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODU _ISHL _ISHRU _ISHRS _LSHL _LSHRU _LSHRS _LADD 
-  _LSUB _LAND _LOR _LXOR _LCMP _LCMP_PP _LCOM _LMUL _LMULU16x32 _LMULS16x32 
-  _LDIVS _LMODS _COPY _CASE_DIRECT _CASE_CHECKED _CASE_SEARCH _CASE_SEARCH_BYTE 
-  _FCALL _FPCMP 
+  _LSUB _LAND _LOR _LXOR _LCMP _LCMP_PP _LCOM _LMUL _LMULU16x32 _LDIVS _LMODS 
+  _COPY _CASE_DIRECT _CASE_CHECKED _CASE_SEARCH _CASE_SEARCH_BYTE _FCALL _FPCMP 
 VREGS.C.o (ansib.lib):
   SL_PULK 
 servo.c.o:
   switch_dir 
-laser.c.o:
-  GetLatestLaserSample 
 iic.c.o:
   iic_request_data iic_read_data iicrestart iicswrcv iicreceive iicreceivem1 
   iicreceivelast iicreceiveone 
@@ -2138,22 +2159,28 @@ simple_serial.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC607 ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xC650 ---- SIZE       4 ---
 Filling bytes inserted
- 00121101
-------- ROM-ADDRESS: 0xC60B ---- RAM-ADDRESS: 0x1101 ---- SIZE      11 ---
+ 00142001
+------- ROM-ADDRESS: 0xC654 ---- RAM-ADDRESS: 0x2001 ---- SIZE       1 ---
+Name of initialized Object : max_count:1
+ 14
+------- ROM-ADDRESS: 0xC655 ---- SIZE       1 ---
+Filling bytes inserted
+ 00
+------- ROM-ADDRESS: 0xC656 ---- RAM-ADDRESS: 0x2003 ---- SIZE      11 ---
 Name of initialized Object : SCI1:1
  D000D100D2 00D300D700 D4
-------- ROM-ADDRESS: 0xC616 ---- RAM-ADDRESS: 0x110C ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xC661 ---- RAM-ADDRESS: 0x200E ---- SIZE       4 ---
 Name of initialized Object : accelerometer_cfg
  2D083108
-------- ROM-ADDRESS: 0xC61A ---- RAM-ADDRESS: 0x1110 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC665 ---- RAM-ADDRESS: 0x2012 ---- SIZE       2 ---
 Name of initialized Object : gyro_cfg
  200F
-------- ROM-ADDRESS: 0xC61C ---- RAM-ADDRESS: 0x1112 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC667 ---- RAM-ADDRESS: 0x2014 ---- SIZE       1 ---
 Name of initialized Object : mag_cfg
  02
-------- ROM-ADDRESS: 0xC61D ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC668 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -2173,6 +2200,7 @@ F_MULKL                   USES F_CLRK F_NORMK
 _FMUL                     USES F_PULK F_PULL F_MULKL F_PSHK 
 F_MAXK                    USES F_CLRK 
 F_NORMK                   USES F_MAXK 
+_LMULS16x32               USES _LNEG 
 _LDIVU                    USES _lDivMod 
 _LMODU                    USES _lDivMod 
 L_NEGK                    USES _NEG_P 
@@ -2189,6 +2217,8 @@ _vect                     USES UnimplementedISR TC7_ISR TC6_ISR TC1_ISR
 main                      USES PLL_Init PWMinitialise setServoPose SCI1 
                                 SerialInitialise iicSensorInit STRING.NO_ERROR...9 
                                 STRING.ERROR..d...10 sprintf SerialOutputString laserInit Init_TC6 
+                                GetLatestLaserSample update_laser STRING..lu..lu..lu..lu..lu..11 
+                                track_object main 
 Init                      USES _startupData 
 Ten                       USES fpow10 fpow_10 Ten _FMUL 
 vprintf                   USES vprintf _CASE_SEARCH_8_BYTE _CASE_DIRECT_BYTE 
@@ -2204,6 +2234,11 @@ setServoPose              USES _PWMDTY45 _PWMDTY67
 Init_TC6                  USES _TSCR1 _TSCR2 _TIOS _TCTL1 _TIE _TFLG1 
 PLL_Init                  USES _SYNR _REFDV _CLKSEL _PLLCTL _CRGFLG 
 laserInit                 USES _TSCR1 _TIE _TIOS _TCTL4 _TFLG1 
+GetLatestLaserSample      USES lastLaserSample 
+update_laser              USES laser_count max_count 
+track_object              USES laser_count max_count delay_count find_av 
+                                _ILSEXT _LMULS16x32 _LCMP_P _LDIVU 
+find_av                   USES _ILSEXT _LDIVU 
 iicinit                   USES Init_TC7 _IBFD _IBAD _IBCR 
 iic_send_data             USES iicstart iictransmit iicstop 
 iicresponse               USES setAlarm _IBSR alarmSignaled iicstop 
@@ -2386,7 +2421,29 @@ DEPENDENCY TREE
  |  +- laserInit           
  |  |    
  |  +- Init_TC6            
- |       
+ |  |    
+ |  +- GetLatestLaserSample
+ |  |    
+ |  +- update_laser        
+ |  |    
+ |  +- track_object        
+ |     | 
+ |     +- find_av             
+ |     |  | 
+ |     |  +- _ILSEXT              (see above)
+ |     |  |  
+ |     |  +- _LDIVU               (see above)
+ |     |     
+ |     +- _ILSEXT              (see above)
+ |     |  
+ |     +- _LMULS16x32         
+ |     |  | 
+ |     |  +- _LNEG                (see above)
+ |     |     
+ |     +- _LCMP_P              (see above)
+ |     |  
+ |     +- _LDIVU               (see above)
+ |        
  +- _Startup            
     | 
     +- Init                
@@ -2417,6 +2474,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 4978
+Number of blocks to be downloaded: 7
+Total size of all blocks to be downloaded: 5469
 

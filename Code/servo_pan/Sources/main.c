@@ -13,6 +13,7 @@
 #include "simple_serial.h"
 #include "tracking.h"
 
+
 void printErrorCode(IIC_ERRORS error_code) {
   char buffer[128];  
   switch (error_code) {
@@ -55,7 +56,6 @@ void printErrorCode(IIC_ERRORS error_code) {
 
 void main(void) {
 
-  
   AccelRaw read_accel;
   AccelScaled scaled_accel;
   GyroRaw read_gyro;
@@ -63,7 +63,7 @@ void main(void) {
   unsigned long laser_samples[20];
   int tol = 3;
   IIC_ERRORS error_code = NO_ERROR;
-  char buffer[128];  
+  char buffer[300];  
 
 
   // make sure the board is set to 24MHz
@@ -98,13 +98,15 @@ void main(void) {
   _DISABLE_COP();
     
   for(;;) {
-      /*
+      
       GetLatestLaserSample(&single_sample);
-      update_laser(single_sample, laser_samples);
+      update_laser(single_sample, &laser_samples[0]);
+      sprintf(buffer, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu\r\n", laser_samples[0], laser_samples[1], laser_samples[2], laser_samples[3], laser_samples[4], laser_samples[5], laser_samples[6], laser_samples[7], laser_samples[8], laser_samples[9]);
+      SerialOutputString(buffer, &SCI1);
       track_object(tol, laser_samples);
-      */
+      
     
-    //_FEED_COP(); /* feeds the dog */
+    _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   
   /* please make sure that you never leave main */
