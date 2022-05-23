@@ -5,13 +5,66 @@
 // need this for string functions
 #include <stdio.h>
 
+#include "gyro.h"
+#include "l3g4200d.h"
+#include "laser.h"
+#include "pll.h"
 #include "servo.h"
+#include "simple_serial.h"
+#include "tracking.h"
+
+void printErrorCode(IIC_ERRORS error_code) {
+  char buffer[128];  
+  switch (error_code) {
+    case NO_ERROR: 
+      sprintf(buffer, "IIC: No error\r\n");
+      break;
+    
+    case NO_RESPONSE: 
+      sprintf(buffer, "IIC: No response\r\n");
+      break;
+    
+    case NAK_RESPONSE:
+      sprintf(buffer, "IIC: No acknowledge\r\n");
+      break;
+    
+    case IIB_CLEAR_TIMEOUT:
+      sprintf(buffer, "IIC: Timeout waiting for reply\r\n");
+      break;
+    
+    case IIB_SET_TIMEOUT: 
+      sprintf(buffer, "IIC: Timeout not set\r\n");
+      break;
+    
+    case RECEIVE_TIMEOUT:
+      sprintf(buffer, "IIC: Received timeout\r\n");
+      break;
+    
+    case IIC_DATA_SIZE_TOO_SMALL:
+      sprintf(buffer, "IIC: Data size incorrect\r\n");
+      break;
+
+    default:
+      sprintf(buffer, "IIC: Unknown error\r\n");
+      break;
+  }
+    
+  SerialOutputString(buffer, &SCI1);
+}
 
 
 void main(void) {
 
   
-  #ifndef SIMULATION_TESTING
+  AccelRaw read_accel;
+  AccelScaled scaled_accel;
+  GyroRaw read_gyro;
+  unsigned long single_sample;
+  unsigned long laser_samples[20];
+  int tol = 3;
+  IIC_ERRORS error_code = NO_ERROR;
+  char buffer[128];  
+
 
   // make sure the board is set to 24MHz
   //  this is needed only when not using the debugger
@@ -20,9 +73,23 @@ void main(void) {
   // initialise PWM
   PWMinitialise();
   setServoPose(100, 100);
-
-  #endif
   
+  // initialise the simple serial
+  SerialInitialise(BAUD_9600, &SCI1);
+
+  // initialise the sensor suite
+  error_code = iicSensorInit();
+  
+  // write the result of the sensor initialisation to the serial
+  if (error_code == NO_ERROR) {
+    sprintf(buffer, "NO_ERROR\r\n");
+    SerialOutputString(buffer, &SCI1);
+  } else {
+    sprintf(buffer, "ERROR %d\r\n");
+    SerialOutputString(buffer, &SCI1);
+  }
+
+  laserInit();
 
   Init_TC6();
   
@@ -31,7 +98,11 @@ void main(void) {
   _DISABLE_COP();
     
   for(;;) {
-  
+      /*
+      GetLatestLaserSample(&single_sample);
+      update_laser(single_sample, laser_samples);
+      track_object(tol, laser_samples);
+      */
     
     //_FEED_COP(); /* feeds the dog */
   } /* loop forever */
