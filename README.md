@@ -34,3 +34,16 @@ Repo for MTRX2700 Major Project Semester 1 2022
     -	The distance is measured again and the function is or isn’t called again
       - If it is called the delay value changes based on the difference in measured distance, and threshold distance, therefore  
           beeping faster if the tracked person gets closer, or slower if they get further
+
+## Control Module
+  The aim of this module is to use the information stored in the shopper struct and make calculations to obtain directions to the shopper and convert the time of flight to distance(cm).
+  
+  ## Function
+  The control module has two functions.
+  1. directionCalculator
+  This calculates the direction the trolley needs to follow in order to reach the shopper. It provides 
+ 
+  2. tof2distance
+  This function calculates the distance from the Lidar sensor reading. It uses the scale that 1ms = 1m to calculate the distance. Distance is returned as centimetres as it is more precise for the project's application. It essentially returns an instruction string detailing the direction, which will be printed to the terminal, an example being:
+  right 5rad
+  forward 50cm
