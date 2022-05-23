@@ -1,0 +1,45 @@
+Monday Week 13 Extra Meeting Minutes 
+
+Absences: 
+- Joon unable to attend in person, attending via Discord 
+
+Attendances: 
+- All other members in attendance 
+
+Agenda: 
+- Finish object detection module, test with hardware 
+- Finish presentation 
+- Finish minutes, README file 
+- Continue integrating modules 
+
+Finish Object Detection Module: 
+- Taj struggling to finish due to faulty hardware (broken ribbon cable)
+  - Replaced, progress continuing
+- Further troubles finding device to work on 
+  - Attributed to CodeWarrior being a steaming pile of **** that doesn't support Mac devices 
+
+Finish Presentation: 
+- Presentation almost entirely finished
+  - Awaiting pseudocode for object detection/tracking and status module 
+- Need to add background research about validity of concept 
+
+Finish Minutes, README:
+- Minutes finished
+- README started
+  - Visual/audio content added 
+
+Continue integrating modules: 
+- No further integration
+
+Plan Before Next Meeting:
+- All modules finished 
+- Documentation entirely finished 
+- Modules integrated, ready for testing 
+
+Roles Until Next Meeting: 
+- Will: finish presentation 
+- Ethan: support where needed 
+- Taj: finish object detection 
+- Josh: finish calibration function
+- Joon: finish status module 
+- All: integrate module into main, complete README
