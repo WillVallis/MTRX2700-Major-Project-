@@ -1,0 +1,51 @@
+Week 12 Minutes 
+
+Absences:
+- Taj not in attendance due to illness
+
+Attendance:
+- All other members in attendance
+
+Other notes: 
+- N/A
+
+Agenda: 
+- Write progress report 
+- Test and finalise visual/audio module 
+- Polish serial module 
+- Discuss presentation points 
+
+Write progress report: 
+- Completed via word, submitted on Canvas.
+
+Test and Finalise Visual/Audio Module: 
+- Initially didn't work 
+  - Trouble looping audio
+  - Fixed by adding delay functions 
+- Tested with hardware, worked as intended. 
+
+Polish Serial Module:
+- Initial difficulty checking string inputs 
+- Fixed by implemented integer constants representing ASCII sum 
+  of strings inside switchcase
+- Tested using hardware, echoes and responds as intended.
+- Still non-functional using simulator but decided hardware is sufficient.
+
+Discuss Presentation Points: 
+- Established demonstration video will be filmed Tuesday before submission. 
+- Will prsent using Powerpoint
+ - Slides covering concept 
+ - Module design 
+ - Module information 
+ 
+Plan Before Next Meeting: 
+- Status module finished and ready for testing/already tested. 
+- Object tracking/detection modules finished
+- Status and serial modules integrated
+
+Roles Over Next Week: 
+- Will: documentation (finish minutes, presentation)
+- Ethan: support where needed 
+- Taj: finish object detection module 
+- Josh: test object tracking module using dummy values (awaiting detection module) 
+- Joon: integrate status module, test if possible

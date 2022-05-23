@@ -1,0 +1,35 @@
+Friday Week 12 Extra Meeting Minutes 
+
+Absences: 
+- Ethan absent in person but joined via Discord
+
+Attendance: 
+- All other members in attendance
+
+Other notes: 
+- Josh arrived 45 minutes late
+- Taj arrived 90 minutes late 
+
+Agenda: 
+- Integrate modules
+- Test modules 
+
+Integrate Modules: 
+- Trouble integrating serial and status modules as hardware unavailable 
+
+Testing Modules: 
+- Status module testing working 
+  - Some trouble with incorrect angle values 
+  - Flip/not flipped working 
+
+Plan Before Next Meeting: 
+- Have presentation more or less finished 
+- Finalise status module 
+- Create calibration module as part of object tracking (control) module
+
+Roles Over Next Week: 
+- Will: finish presentation 
+- Ethan: integrate visual/audio module 
+- Taj: finish object detection module 
+- Josh: integrate control module, create calibration function
+- Joon: finish status module (so it returns correct values) 
