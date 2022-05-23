@@ -41,9 +41,11 @@ Repo for MTRX2700 Major Project Semester 1 2022
   ## Function
   The control module has two functions.
   1. directionCalculator
+  
   This calculates the direction the trolley needs to follow in order to reach the shopper. It provides 
  
   2. tof2distance
+  
   This function calculates the distance from the Lidar sensor reading. It uses the scale that 1ms = 1m to calculate the distance. Distance is returned as centimetres as it is more precise for the project's application. It essentially returns an instruction string detailing the direction, which will be printed to the terminal, an example being:
   right 5rad
   forward 50cm
