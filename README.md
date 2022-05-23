@@ -38,7 +38,7 @@ Repo for MTRX2700 Major Project Semester 1 2022
 ## Control Module
   The aim of this module is to use the information stored in the shopper struct and make calculations to obtain directions to the shopper and convert the time of flight to distance(cm).
   
-  ## Function
+  ### Function
   The control module has two functions.
   1. directionCalculator
   
