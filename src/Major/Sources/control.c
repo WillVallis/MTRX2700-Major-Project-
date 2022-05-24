@@ -112,8 +112,10 @@ void directionCalculator (Shopper *shopper) {
 void dummyControlInit(Shopper *shopper){
     // have to initialise variables of struct to see if it compiles
     // ****************************
-    shopper->referenceDistance = 1;
-    strcpy(shopper->instructionString, "TEST RIGHT 4.20\nFORWARD 80.08\n");
+    shopper->referenceDistance = 1; // 1m away
+    shopper->measuredDistance = 1.50; // 1.5m away
+    shopper->measuredAngle = 0.52; // 30deg
+   // strcpy(shopper->instructionString, "TEST RIGHT 4.20\nFORWARD 80.08\n");
     // ****************************
       
 }

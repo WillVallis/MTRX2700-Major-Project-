@@ -84,7 +84,7 @@ void main(void) {
   initMotion();        
   _DISABLE_COP();
   motion_calibrate();
-  dummyControlInit(&shopper);                                     
+                                     
 
 	EnableInterrupts;
 	
@@ -109,11 +109,12 @@ void main(void) {
       
       
       switch (messageValue) {
-        case DIRECT: { // Direction
+        /*case DIRECT: { // Direction
+          dummyControlInit(&shopper);
           directionCalculator(&shopper);          
           outputMessage(sci1SerialBuffer, shopper->instructionString);
           break;
-        }
+        } */ 
         case DIST: { // Distance
           outputMessage(sci1SerialBuffer, message);
           break;
