@@ -2,6 +2,7 @@
 #include <string.h>
 #include <math.h>
 
+#include "control.h"
 #include "ftoa.h"
 
 
@@ -14,11 +15,17 @@ void distanceAngleGeometry (Shopper *shopper) {
     float midpointDistance; // left = a right = b
     
     // dummy values
-    float rightAngle = 5.00, leftAngle = 4.00;
-    float rightDistance = 0.5, leftDistance = 1; 
+    float rightAngle = 5.00;
+    float leftAngle = 4.00;
+    float rightDistance = 0.5;
+    float leftDistance = 1; 
     
     // values for calculation
-    float DOC, CD, CM, DCO, COM;
+    float DOC;
+    float CD;
+    float CM;
+    float DCO;
+    float COM;
     
     
     // geometry
@@ -35,7 +42,7 @@ void distanceAngleGeometry (Shopper *shopper) {
     shopper->measuredDistance = midpointDistance;
     shopper->measuredAngle = midpointAngle;
 }
-
+     
 
 // DIRECTION function
 // INPUT: lidar value and current angle of lidar sensor
@@ -43,7 +50,7 @@ void distanceAngleGeometry (Shopper *shopper) {
 // direction [angle,longitudinal distance to person]
     
 void directionCalculator (Shopper *shopper) {
-    
+    char append[64];      
  // ANGLE
     shopper->travelAngle = shopper->measuredAngle - shopper->referenceAngle;
 
@@ -80,7 +87,7 @@ void directionCalculator (Shopper *shopper) {
     shopper->travelAngle = fabs(shopper->travelAngle);
     shopper->travelDistance = fabs(shopper->travelDistance);
 
-    char append[64];
+
     // latitude (angle)
     strcat(shopper->instructionString,shopper->latitudeDirection); // add right/left
     strcat(shopper->instructionString," "); // add space
