@@ -10,6 +10,9 @@
 #include "motion.h"
 #include "math.h"
 #include "ftoa.h"
+#include "timer.h"
+#include "sound.h"
+#include "display.h"
 
 
 // Define switch case constants 
@@ -67,7 +70,8 @@ void main(void) {
 
   // Initialise our modules            
   PLL_Init();
-  initTimer();  
+  initTimer();
+  initMusic();  
   initMotion();        
   _DISABLE_COP();
   
