@@ -1,6 +1,20 @@
 # MTRX2700-Major-Project-
 Repo for MTRX2700 Major Project Semester 1 2022
 
+## Serial Module 
+  The serial module serves the purpose of interfacing between the user and the system. It's primary use is to output messages regarding the system to the user when       queried.
+  
+  ### Function
+  - The serial module can handle instructions typed into the terminal using an interrupt that loads the input into a string buffer. 
+    - This input buffer is checked in main function and responded to using other modules
+  - The module outputs messages in a similar fashion to how it handles inputs. Output messages are loaded into an output buffer which is then passed through the           serial port character by character.
+  ### Usage 
+  - The serial module can be interacted with by the user by typing a command into the terminal. Valid commands are as follows:
+      - "Distance" - returns the current visible distance 
+      - "Angle" - returns the current angle of the user from the datum
+      - "Tipped" - returns whether the system is upright or inverted
+  - Within the software, messages are outputted using the outputMessage function, which takes the serial buffer and string message as arguments.
+
 ## Visual Module
   The purpose of the visual module is to display the distance between the tracked person and the trolley on the 4 7-seg displays. 
 
