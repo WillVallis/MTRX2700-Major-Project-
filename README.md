@@ -51,3 +51,55 @@ Repo for MTRX2700 Major Project Semester 1 2022
   
     right 5rad
     forward 50cm
+    
+## Vector Module
+  The purpose of this module is to provide data structures and funcions to aid in calculations for the Motion Module.
+  
+  The Vector3 struct has an x, y, and z float entry, used for calculations.
+  The Vector3i struct has an x, y, and z integer entry, used as an intermediary step reading from the sensors.
+  
+  ## Functions
+  The module provides functions for vector addition and component multiplicaion, both in the form of Vector on Vector and Vector and scalar components, and functions for calculating the magnitude of the vector and rotating a vector.
+  It also provides a transformer function that converts Vector3i to Vector3.  
+    
+## Motion Module
+  The purpose of this module is to get information of the state of the trolley at the current time.  Information on the angle it is facing, the current acceleration, and if the trolley is tipped over can be determined.
+  
+  ### Function
+  The motion module has 4 primary functions.
+  
+  1. motion_calibrate
+  
+  This calibrates the sensors to the current state of the trolley, useful for fixing any desync issues or if the physical module is incorrectly installed.
+  
+  2. get_gyro
+
+  This gets the x, y, z rotation readings from the gyro, adjusted to radians.  (CURRENTLY NOT FUNCTIONAL)
+  
+  3. get_accel
+  
+  This gets the x, y, z acceleration readings from the accelertometer, adjusted to metres per second squared.
+  
+  4. motion_check_tipped_over
+  
+  This queries if the trolley is tipped over, returning a 0 or a 1.
+
+pseudocode
+- Calibrate
+    - Get current gyro readings
+    - Store readings in the gyro offset variable
+
+    - Get current accelerometer readings
+    - Calculate the magnitude and scale it to 9.81
+    - Store calculated value in the accel scale variable
+
+- Get gyro/accel
+    - Get current raw readings
+    - Offset and scale gyro/accel readings with values calculated during calibration
+    - Return values
+
+- Get tilt
+    - Get the y-component of the accelerometer and take inverse cosine to get angle
+    - If it is greater than 45° it is tipped over
+
+  
