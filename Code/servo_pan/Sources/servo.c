@@ -25,7 +25,7 @@ void PWMinitialise(void){
     PWME  |= 0xFF;      // enable PWM0
 }
 
-void setServoPose(int azimuth, int elevation){  
+void setServoPose(int azimuth){  
     PWMDTY45 = (int)(ZERO_ELEVATION_DUTY);  // Sets elevation to duty cycle using PWM 45
     PWMDTY67 = (int)(ZERO_AZIMUTH_DUTY+azimuth);   // Sets azimuth to duty cycle using PWM 67
 }
@@ -53,7 +53,13 @@ int toggle = 0;
 // function to be called when the scanning direction is to be switched
 void switch_dir (void) {
   
-  toggle ^= toggle;
+  toggle ^= 1;
+}
+
+
+int current_dir (void) {
+  
+  return toggle;
 }
 
 
@@ -75,5 +81,5 @@ __interrupt void TC6_ISR(void) {
     toggle = 0;
   }
   
-  setServoPose(iterator_counter, iterator_counter);    
+  setServoPose(iterator_counter);    
 }

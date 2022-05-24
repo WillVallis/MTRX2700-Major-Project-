@@ -10,6 +10,9 @@ void setServoPose(int azimuth, int elevation);
 // switches pan direction
 void switch_dir (void);
 
+// returns the current pan direction
+int current_dir (void);
+
 // interrupt used for cycling through the servo positions
 __interrupt void TC6_ISR(void);
 

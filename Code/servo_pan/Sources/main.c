@@ -56,12 +56,16 @@ void printErrorCode(IIC_ERRORS error_code) {
 
 void main(void) {
 
+  int i;
+  int pan_dir;
   AccelRaw read_accel;
   AccelScaled scaled_accel;
   GyroRaw read_gyro;
   unsigned long single_sample;
-  unsigned long laser_samples[20];
-  int tol = 3;
+  
+  float dist;
+  float laser_dists[20];
+  int tol = 2;
   IIC_ERRORS error_code = NO_ERROR;
   char buffer[300];  
 
@@ -100,13 +104,27 @@ void main(void) {
   for(;;) {
       
       GetLatestLaserSample(&single_sample);
-      update_laser(single_sample, &laser_samples[0]);
-      sprintf(buffer, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu\r\n", laser_samples[0], laser_samples[1], laser_samples[2], laser_samples[3], laser_samples[4], laser_samples[5], laser_samples[6], laser_samples[7], laser_samples[8], laser_samples[9]);
+      sprintf(buffer, "%lu         ", single_sample);
       SerialOutputString(buffer, &SCI1);
-      track_object(tol, laser_samples);
+      
+      dist = conv_dist(single_sample);
+      update_laser(single_sample, &laser_dists[0]);
+      /*
+      for (i = 0; i < 20; i++) {
+        sprintf(buffer, "%lu ", laser_samples[i]);
+        SerialOutputString(buffer, &SCI1);
+      }
+      sprintf(buffer, "\r\n");
+      SerialOutputString(buffer, &SCI1);
+      */
+      //track_object(tol, &laser_dists[0]);
+      pan_dir = current_dir();
+      
+      sprintf(buffer, "%f m\r\n", dist);
+      SerialOutputString(buffer, &SCI1);      
       
     
-    _FEED_COP(); /* feeds the dog */
+    //_FEED_COP(); /* feeds the dog */
   } /* loop forever */
   
   /* please make sure that you never leave main */
