@@ -39,6 +39,7 @@ void main(void) {
 
   // Initialise our modules
   initTimer();
+  initMusic();
   
 
 
