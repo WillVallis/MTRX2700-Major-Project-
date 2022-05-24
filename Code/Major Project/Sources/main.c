@@ -5,6 +5,9 @@
 
 #include "serial.h"
 #include "motion.h"
+#include "timer.h"
+#include "sound.h"
+#include "display.h"
 
 
 const char UNKNOWN_COMMAND_TEMPLATE[] = "Error! Unknown command: _.\r";

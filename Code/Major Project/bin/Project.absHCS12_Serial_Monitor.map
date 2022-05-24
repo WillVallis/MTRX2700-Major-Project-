@@ -8,7 +8,7 @@ Also summary information like the code size is likely to be misleading.
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
-PROGRAM "C:\Users\silla\OneDrive\Documents\GitHub\MTRX2700-Major-Project-\Code\Major Project\bin\Project.absHCS12_Serial_Monitor.abs"
+PROGRAM "C:\Users\eglyn\Desktop\Code\Major Project\bin\Project.absHCS12_Serial_Monitor.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -35,6 +35,7 @@ iic.c.o                                 Model: BANKED,        Lang: ANSI-C
 l3g4200d.c.o                            Model: BANKED,        Lang: ANSI-C
 motion.c.o                              Model: BANKED,        Lang: ANSI-C
 vector3.c.o                             Model: BANKED,        Lang: ANSI-C
+music.c.o                               Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
@@ -747,7 +748,7 @@ MODULE:                 -- mc9s12dg256.c.o --
 MODULE:                 -- main.c.o --
 - PROCEDURES:
      printUnknownCommandError                     0'Error      3F      63       0   .text       
-     main                                         0'Error      8E     142       0   .text       
+     main                                         0'Error      92     146       0   .text       
 - VARIABLES:
      UNKNOWN_COMMAND_TEMPLATE                     0'Error      1C      28       0   .rodata     
      WELCOME_MESSAGE                              0'Error      C7     199       0   .rodata     
@@ -778,6 +779,7 @@ MODULE:                 -- ALLOC.C.o (ansibi.lib) --
      free_ptr                                     0'Error       2       2       0   .bss        
 MODULE:                 -- rtshc12.c.o (ansibi.lib) --
 - PROCEDURES:
+     _BSHL                                        0'Error       8       8       0   NON_BANKED  
      _lDivMod                                     0'Error      BE     190       0   NON_BANKED  
      _NEG_P                                       0'Error       F      15       0   NON_BANKED  
      _LDIVS                                       0'Error      35      53       0   NON_BANKED  
@@ -800,6 +802,7 @@ MODULE:                 -- serial.c.o --
 MODULE:                 -- timer.c.o --
 - PROCEDURES:
      initTimer                                    0'Error       8       8       0   .text       
+     enableOutputCompare                          0'Error      14      20       0   .text       
 - VARIABLES:
 MODULE:                 -- iic.c.o --
 - PROCEDURES:
@@ -842,6 +845,18 @@ MODULE:                 -- vector3.c.o --
      vector3_get_length                           0'Error      40      64       0   .text       
      vector3i_to_vector3                          0'Error      30      48       0   .text       
 - VARIABLES:
+MODULE:                 -- music.c.o --
+- PROCEDURES:
+     initMusic                                    0'Error      27      39       0   .text       
+     noteInterrupt                                0'Error      29      41       0   NON_BANKED  
+     nextNoteInterrupt                            0'Error      45      69       0   NON_BANKED  
+- VARIABLES:
+     musicLength                                  0'Error       2       2       0   .bss        
+     noteIndex                                    0'Error       2       2       0   .bss        
+     playing                                      0'Error       2       2       0   .bss        
+     looping                                      0'Error       2       2       0   .bss        
+     notes                                        0'Error       2       2       0   .common     
+     lengths                                      0'Error       2       2       0   .common     
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -868,13 +883,11 @@ STRING.C.o (ansibi.lib):
 ALLOC.C.o (ansibi.lib):
   realloc 
 rtshc12.c.o (ansibi.lib):
-  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
-  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LINC 
-  _LDEC _LMUL _LMULU16x32 _LMULS16x32 _LDIVU _LMODU _LMODS _CASE_DIRECT 
+  _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU _LSHRS 
+  _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LINC _LDEC 
+  _LMUL _LMULU16x32 _LMULS16x32 _LDIVU _LMODU _LMODS _CASE_DIRECT 
   _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH 
   _CASE_SEARCH_BYTE _CASE_SEARCH_8 _FCALL _FPCMP 
-timer.c.o:
-  enableOutputCompare 
 iic.c.o:
   iicinit iic_send_data iicreceiveone Init_TC7 TC7_ISR 
 l3g4200d.c.o:
@@ -883,6 +896,8 @@ motion.c.o:
   get_gyro motion_check_tipped_over 
 vector3.c.o:
   vector3_offset_vector vector3_offset_scalar 
+music.c.o:
+  setMusic 
 NOT USED VARIABLES
 STRING.C.o (ansibi.lib):
   STRING..1 next.2 
@@ -890,6 +905,9 @@ rtshc12.c.o (ansibi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 l3g4200d.c.o:
   accelerometer_cfg gyro_cfg mag_cfg 
+music.c.o:
+  OUTPUT_TEMPLATE LOOP_TEMPLATE INVALID_TEMPLATE UNFINISHED_TEMPLATE 
+  STOPPED_TEMPLATE 
 
 *********************************************************************************************
 COPYDOWN SECTION

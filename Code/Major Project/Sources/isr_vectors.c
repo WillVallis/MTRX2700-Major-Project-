@@ -2,6 +2,7 @@
 #include "derivative.h"      /* derivative-specific definitions */
 
 #include "serial.h"
+#include "music.h"
 
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
