@@ -14,9 +14,11 @@
 #include "timer.h"
 #include "sound.h"
 #include "display.h"
+#include "control.h"
 
 
 // Define switch case constants 
+const int DIRECT = 'D' + 'i' + 'r' + 'e' + 'c' + 't' + 'i' + 'o' + 'n';
 const int DIST = 'D' + 'i' + 's' + 't' + 'a' + 'n' + 'c' + 'e';
 const int ANG = 'A' + 'n' + 'g' + 'l' + 'e';
 const int STAT = 'S' + 't' + 'a' + 't' + 'u' + 's';
@@ -66,6 +68,10 @@ int calculateMessageValue (int length, char *message) {
 void main(void) {
   float tilt;
   int tipped = 0;
+  
+  // declare shopper
+  Shopper shopper;
+  
   Vector3i raw;
 
   // Initialise the serial port and create a buffer object for it
@@ -78,7 +84,7 @@ void main(void) {
   initMotion();        
   _DISABLE_COP();
   motion_calibrate();
-                                    
+  dummyControlInit(&shopper);                                     
 
 	EnableInterrupts;
 	
@@ -103,6 +109,11 @@ void main(void) {
       
       
       switch (messageValue) {
+        case DIRECT: { // Direction
+          directionCalculator(&shopper);          
+          outputMessage(sci1SerialBuffer, shopper->instructionString);
+          break;
+        }
         case DIST: { // Distance
           outputMessage(sci1SerialBuffer, message);
           break;

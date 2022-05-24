@@ -15,10 +15,12 @@ void distanceAngleGeometry (Shopper *shopper) {
     float midpointDistance; // left = a right = b
     
     // dummy values
+    // **********************
     float rightAngle = 5.00;
     float leftAngle = 4.00;
     float rightDistance = 0.5;
     float leftDistance = 1; 
+    // **********************
     
     // values for calculation
     float DOC;
@@ -50,8 +52,12 @@ void distanceAngleGeometry (Shopper *shopper) {
 // direction [angle,longitudinal distance to person]
     
 void directionCalculator (Shopper *shopper) {
-    char append[64];      
- // ANGLE
+    char append[64];
+    
+    // initialise reference angle as 0, assuming we reference point never changes
+    shopper->referenceAngle = 0;
+           
+ // ANGLE calc
     shopper->travelAngle = shopper->measuredAngle - shopper->referenceAngle;
 
     // once angle direction is stored, set calibrated angle as the measured angle
@@ -67,7 +73,7 @@ void directionCalculator (Shopper *shopper) {
         strcpy(shopper->latitudeDirection, "STILL");
     }
 
-// DISTANCE
+// DISTANCE calc
     // cal = 1m; shopper moves 0.5m away
     shopper->travelDistance = shopper->measuredDistance - shopper->referenceDistance;
 
@@ -101,4 +107,13 @@ void directionCalculator (Shopper *shopper) {
     ftoa(shopper->travelDistance, append, 2);
     strcat(shopper->instructionString,append); // add distance
     strcat(shopper->instructionString,"\r"); // carriage return
+}
+
+void dummyControlInit(Shopper *shopper){
+    // have to initialise variables of struct to see if it compiles
+    // ****************************
+    shopper->referenceDistance = 1;
+    strcpy(shopper->instructionString, "TEST RIGHT 4.20\nFORWARD 80.08\n");
+    // ****************************
+      
 }

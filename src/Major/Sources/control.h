@@ -26,5 +26,7 @@ typedef struct Shopper {
 void distanceAngleGeometry(Shopper *shopper);
 
 void directionCalculator (Shopper *shopper);
+
+void dummyControlInit(Shopper *shopper);
     
 #endif
