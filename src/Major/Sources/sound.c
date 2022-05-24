@@ -41,8 +41,8 @@ void caution_beep(int threshold, int distance, int *wait){
   //play beep
   setMusic(beep, 0);
   //make sure to delay so beep is interuppted by changing beep
-  delay(*wait);
-  delay(*wait);
+  //delay(*wait);
+  //delay(*wait);
 }
 
 //play success beep

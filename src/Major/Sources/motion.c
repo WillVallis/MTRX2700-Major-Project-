@@ -60,11 +60,9 @@ float min(float x, float y) {
 float get_tilt_angle() {
     Vector3 accel = get_accel();
 
-    return acosf(min(accel.y / 9.81, 1.0));
+    return acosf(min(accel.x / 9.81, 1.0));
 }
 
-int motion_check_tipped_over() {      
-    Vector3 accel = get_accel();
-    
-    return (fabs(accel.x) < 5.0);
+int motion_check_tipped_over() {
+    return (get_tilt_angle() < 0.75);
 }
