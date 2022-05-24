@@ -47,7 +47,7 @@ Vector3 get_accel() {
     getRawDataAccel(&raw_accel);
     converted_accel = vector3i_to_vector3(raw_accel);
     converted_accel = vector3_scaled_scalar(converted_accel, accel_scale, accel_scale, accel_scale);
-    converted_accel = vector3_rotated(converted_accel, systemState->gyro_offset);
+    //converted_accel = vector3_rotated(converted_accel, systemState->gyro_offset);     
 
     return converted_accel;
 }
@@ -63,6 +63,8 @@ float get_tilt_angle() {
     return acosf(min(accel.y / 9.81, 1.0));
 }
 
-int motion_check_tipped_over() {
-    return (get_tilt_angle() < 0.75);
+int motion_check_tipped_over() {      
+    Vector3 accel = get_accel();
+    
+    return (fabs(accel.x) < 5.0);
 }

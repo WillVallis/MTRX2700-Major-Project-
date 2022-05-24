@@ -9,6 +9,7 @@
 #include "l3g4200d.h"
 #include "motion.h"
 #include "math.h"
+#include "music.h"
 #include "ftoa.h"
 #include "timer.h"
 #include "sound.h"
@@ -21,6 +22,8 @@ const int ANG = 'A' + 'n' + 'g' + 'l' + 'e';
 const int STAT = 'S' + 't' + 'a' + 't' + 'u' + 's';
 const int TIPPED = 'T'+'i'+'p'+'p'+'e'+'d';
 
+// Tip alarm sounds 
+const char TIP_ALARM[] = "mb42a42G42a42c50d52c52b42c52e50f52e52D52e52b52a52G52a52b52a52G52a52c61c61a51c61g53a53b52a51g51a51g53a53b52a51g51a51g53a53b52a51g51F51e50";
 
 const char UNKNOWN_COMMAND_TEMPLATE[] = "Error! Unknown command.\r";
 const char WELCOME_MESSAGE[] = "Hello! The device should now be tracking you! Feel free to enter a query!\n\
@@ -74,17 +77,22 @@ void main(void) {
   initMusic();  
   initMotion();        
   _DISABLE_COP();
-  
-
+  motion_calibrate();
+                                    
 
 	EnableInterrupts;
 	
 	// Print welcome message
 	outputMessage(sci1SerialBuffer, WELCOME_MESSAGE);
 	
-	motion_calibrate();
 	
   for(;;) { // Infinite loop
+
+    tilt = motion_check_tipped_over();
+    if (tilt) {
+      setMusic(TIP_ALARM, 0);
+    }   
+
 
     if (sci1SerialBuffer->inputReady) { // Check if we have a new command
       // User input is formatted as a single command character follwed by parameters
@@ -109,7 +117,9 @@ void main(void) {
         }
         case TIPPED: { // Angle
           tilt =  motion_check_tipped_over();
-          if (tilt) outputMessage(sci1SerialBuffer, TIPPED_MESSAGE);
+          if (tilt) {
+            outputMessage(sci1SerialBuffer, TIPPED_MESSAGE);
+          }
           else outputMessage(sci1SerialBuffer, UNTIPPED_MESSAGE);
           break;
         }

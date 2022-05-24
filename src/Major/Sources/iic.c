@@ -287,14 +287,7 @@ void setAlarm(uint16_t msDelay)
 }
 
 
-void Init_TC7 (void) {
-  TSCR1_TEN = 1;
-  
-  TSCR2 = 0x00;   // prescaler 1, before 32 = 0x04
-  TIOS_IOS7 = 1;   // set channel 7 to output compare
-    
-  TCTL1_OL7 = 1;    // Output mode for ch7
-  TIE_C7I = 1;   // enable interrupt for channel 7  
+void Init_TC7 (void) { 
     enableOutputCompare(7); 
 }
 
