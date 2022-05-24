@@ -23,7 +23,7 @@ void distanceAngleGeometry (Shopper *shopper) {
     
     // geometry
     DOC = rightAngle - leftAngle;
-    CD = sqrtf(powf(leftDistance,2) + powf(rightDistance,2)  - 2*leftDistance*rightDistance*cosf(DOC));
+    CD = sqrtf(powf(leftDistance,2) + powf(rightDistance,2)-2*leftDistance*rightDistance*cosf(DOC));
     CM = CD/2;
     DCO = asinf((rightDistance*sinf(DOC))/CD);
     midpointDistance = sqrtf(powf(leftDistance,2)+powf(CM,2) - 2*leftDistance*CM*cosf(DCO));
@@ -31,8 +31,6 @@ void distanceAngleGeometry (Shopper *shopper) {
     COM = asinf((CM*sinf(DCO))/midpointDistance);
     midpointAngle = COM + leftAngle;
 
-
-    printf("new func: %f\n^^debug^^\n",midpointAngle);
     // update shopper struct
     shopper->measuredDistance = midpointDistance;
     shopper->measuredAngle = midpointAngle;

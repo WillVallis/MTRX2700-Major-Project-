@@ -8,22 +8,23 @@
 
 typedef struct Shopper {
     
-    int referenceDistance; // serial input to set this distance
+    float referenceDistance; // serial input to set this distance
     float referenceAngle; // initialise to zero
-    int measuredDistance; // taj
+    float measuredDistance; // taj
     float measuredAngle; // joon's
 
-    int travelDistance;
+    float travelDistance;
     char longitudeDirection[5];
-    int travelAngle;
+    float travelAngle;
     char latitudeDirection[7];
 
     char instructionString[50];
 
-} Person;
+} Shopper;
 
-void directionCalculator (Person *shopper);
 
 void distanceAngleGeometry(Shopper *shopper);
+
+void directionCalculator (Person *shopper);
     
 #endif
