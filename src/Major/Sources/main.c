@@ -21,17 +21,17 @@
 const int DIRECT = 'D' + 'i' + 'r' + 'e' + 'c' + 't' + 'i' + 'o' + 'n';
 const int DIST = 'D' + 'i' + 's' + 't' + 'a' + 'n' + 'c' + 'e';
 const int ANG = 'A' + 'n' + 'g' + 'l' + 'e';
-const int STAT = 'S' + 't' + 'a' + 't' + 'u' + 's';
 const int TIPPED = 'T'+'i'+'p'+'p'+'e'+'d';
 
 // Tip alarm sounds 
 const char TIP_ALARM[] = "mb42a42G42a42c50d52c52b42c52e50f52e52D52e52b52a52G52a52b52a52G52a52c61c61a51c61g53a53b52a51g51a51g53a53b52a51g51a51g53a53b52a51g51F51e50";
 
 const char UNKNOWN_COMMAND_TEMPLATE[] = "Error! Unknown command.\r";
-const char WELCOME_MESSAGE[] = "Hello! The device should now be tracking you! Feel free to enter a query!\n\
-To check distance between user and system, enter \'D\'\n\
-To check angle from datum, enter \'A\'\n\
-To check system status, enter \'S\'\r";
+const char WELCOME_MESSAGE[] = "Hello! The device should now be tracking you! To enter a query, type one of the following:\n\
+To check distance between user and system, enter \'Distance\'\n\
+To check angle from datum, enter \'Angle\'\n\
+To check whether the system is upright, enter \'Tipped\'\n\
+To get the current directions to the user, enter \'Direction\'\r";
 
 const char TIPPED_MESSAGE[] = "Trolley is tipped.\r";
 const char UNTIPPED_MESSAGE[] = "Trolley is upright.\r";
@@ -53,11 +53,11 @@ void printUnknownCommandError(SerialBuffer *serialBuffer) {
 }
 
 int calculateMessageValue (int length, char *message) {
-   int value = 0, counter = 0;
+   int value = 0, i = 0;
    
    // Iterate through message and add values
-   for (counter = 0; counter < length; counter++) {
-     value += message[counter];
+   for (i = 0; i < length; i++) {
+     value += message[i];
    }
    
    // Return numeric message value 
@@ -100,11 +100,13 @@ void main(void) {
     }   
 
 
-    if (sci1SerialBuffer->inputReady) { // Check if we have a new command
-      // User input is formatted as a single command character follwed by parameters
-      char command = sci1SerialBuffer->inputString[0]; // First character is our command
-      char *message = sci1SerialBuffer->inputString; // Some functions need parameters
-      int messageValue = calculateMessageValue(sci1SerialBuffer->stringLength, message); // Get integer value of message
+    /* ------ Section for handling user inputs ------ */
+    // Check if we have a new command
+    if (sci1SerialBuffer->inputReady) { 
+      // User input is formatted as a single word
+      char *message = sci1SerialBuffer->inputString;
+      // Get integer value of message
+      int messageValue = calculateMessageValue(sci1SerialBuffer->stringLength, message); 
 
       
       
@@ -127,16 +129,12 @@ void main(void) {
           outputMessage(sci1SerialBuffer, message);
           break;
         }
-        case TIPPED: { // Angle
+        case TIPPED: { // System orientation
           tilt =  motion_check_tipped_over();
           if (tilt) {
             outputMessage(sci1SerialBuffer, TIPPED_MESSAGE);
           }
           else outputMessage(sci1SerialBuffer, UNTIPPED_MESSAGE);
-          break;
-        }
-        case STAT : { // Status 
-          outputMessage(sci1SerialBuffer, message);
           break;
         }
         // Default cases for no command or an unknown command

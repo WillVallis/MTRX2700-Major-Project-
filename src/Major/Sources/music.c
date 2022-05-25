@@ -126,7 +126,8 @@ void setMusic(char *command, int loop) {
                     break;
                 }
                 case 1: { // Octave parse
-                    if (currentNoteValue != NOTE_N) currentNoteValue = currentNoteValue >> (currentCharacter - '0'); // Right shift to halve the duration
+                    // Right shift to halve the duration
+                    if (currentNoteValue != NOTE_N) currentNoteValue = currentNoteValue >> (currentCharacter - '0'); 
                     break;
                 }
                 case 2: { // Duration parse
@@ -142,36 +143,47 @@ void setMusic(char *command, int loop) {
             mode = (mode + 1) % 3;
         }
         musicLength = noteIndex;
-        notes[noteIndex] = NOTE_N; // Catch blank loop for end of song
+        // Catch blank loop for end of song
+        notes[noteIndex] = NOTE_N; 
         noteIndex = 0;
 
         // Reset the timers so the song starts immediately
         TC6 = TCNT + notes[0];
         TC5 = TCNT + lengths[0];
 
-        timeEstimate = (timeEstimate + (1000-1)) / 1000; // Convert to seconds, rounding up
+        // Convert to seconds, rounding up
+        timeEstimate = (timeEstimate + (1000-1)) / 1000; 
     }
         EnableInterrupts;
 }
 
-#pragma CODE_SEG __NEAR_SEG NON_BANKED // Interrupt section for this module. Placement will be in NON_BANKED area.
+// Interrupt section for this module. Placement will be in NON_BANKED area.
+#pragma CODE_SEG __NEAR_SEG NON_BANKED 
 
 // Interrupt for current note
 __interrupt void noteInterrupt(void) {
-    if (notes[noteIndex] != NOTE_N) { // If the current not isn't a silent note
-        PTT ^= 0b00100000; // Flip the speaker to produce sound
-        TC6 = TCNT + notes[noteIndex]; // and set the next trigger to the appropriate time
+
+    // If the current note isn't a silent note
+    if (notes[noteIndex] != NOTE_N) { 
+        // Flip the speaker to produce sound
+        PTT ^= 0b00100000;
+        // and set the next trigger to the appropriate time 
+        TC6 = TCNT + notes[noteIndex]; 
     } else {
-        TC6 = TC5; // If it is a null note, set the next note interrupt to be at the same time as the note change
+        // If it is a null note, set the next note interrupt to be at the same time as the note change
+        TC6 = TC5; 
     }
 }
 
 // Interrupt for changeing notes
 __interrupt void nextNoteInterrupt(void) {
-    if (looping) { // If the song should loop and it was not stopped, loop back to the start of the song if we went pass the end
+    // If the song should loop and it was not stopped, loop back to the start of the song if we went pass the end
+    if (looping) { 
         if (playing) noteIndex = (noteIndex + 1) % musicLength;
         else noteIndex = musicLength;
-    } else { // If the song shouldn't loop and we reached the end of the song, stop playback.  Otherwise advance to the next note.
+    } 
+    // If the song shouldn't loop and we reached the end of the song, stop playback. Otherwise advance to the next note.
+    else { 
         if (noteIndex == musicLength) playing = 0;
         else noteIndex += 1;
     }
