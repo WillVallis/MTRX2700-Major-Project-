@@ -1,5 +1,4 @@
 void FloatToInt(float num, int new_num[1]){
-  int corrected = 0;
   num += 0.5; //round to nearest whole
   new_num[0] = (int)num;
 }
