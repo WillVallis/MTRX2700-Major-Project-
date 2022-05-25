@@ -8,7 +8,7 @@
 
 // input is right and left angle
 // uses geometry to find the angle of lidar sensor and the distance of the shopper
-void distanceAngleGeometry (Shopper *shopper) {
+/*void distanceAngleGeometry (Shopper *shopper) {
     
     // considering origin is taken from the left
     float midpointAngle;
@@ -43,7 +43,7 @@ void distanceAngleGeometry (Shopper *shopper) {
     // update shopper struct
     shopper->measuredDistance = midpointDistance;
     shopper->measuredAngle = midpointAngle;
-}
+} */
      
 
 // DIRECTION function
@@ -99,6 +99,7 @@ void directionCalculator (Shopper *shopper) {
     strcat(shopper->instructionString," "); // add space
     ftoa(shopper->travelAngle, append, 2);
     strcat(shopper->instructionString,append);// add angle
+    strcat(shopper->instructionString, "rads"); // add unit
     strcat(shopper->instructionString,"\n"); // new line
     
     // longitude (distance)
@@ -106,6 +107,7 @@ void directionCalculator (Shopper *shopper) {
     strcat(shopper->instructionString," "); // add space
     ftoa(shopper->travelDistance, append, 2);
     strcat(shopper->instructionString,append); // add distance
+    strcat(shopper->instructionString, "m"); // add unit
     strcat(shopper->instructionString,"\r"); // carriage return
 }
 

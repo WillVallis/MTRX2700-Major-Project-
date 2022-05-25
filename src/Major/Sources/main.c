@@ -15,6 +15,12 @@
 #include "sound.h"
 #include "display.h"
 #include "control.h"
+#include "gyro.h"
+#include "laser.h"
+#include "servo.h"
+#include "tracking.h"
+#include "movement.h"
+#include "misc.h"
 
 
 // Define switch case constants 
@@ -22,6 +28,7 @@ const int DIRECT = 'D' + 'i' + 'r' + 'e' + 'c' + 't' + 'i' + 'o' + 'n';
 const int DIST = 'D' + 'i' + 's' + 't' + 'a' + 'n' + 'c' + 'e';
 const int ANG = 'A' + 'n' + 'g' + 'l' + 'e';
 const int TIPPED = 'T'+'i'+'p'+'p'+'e'+'d';
+const int TIME = 'T' + 'i' + 'm' + 'e';
 
 // Tip alarm sounds 
 const char TIP_ALARM[] = "mb42a42G42a42c50d52c52b42c52e50f52e52D52e52b52a52G52a52b52a52G52a52c61c61a51c61g53a53b52a51g51a51g53a53b52a51g51a51g53a53b52a51g51F51e50";
@@ -64,26 +71,79 @@ int calculateMessageValue (int length, char *message) {
    return value;
 }
 
+//conversion functions
+void FloatToInt(float num, int new_num[1]){
+  num += 0.5; //round to nearest whole
+  new_num[0] = (int)num;
+}
+
+void MetreToCem(float metre, int cem[1]){
+	metre *= 100;
+	cem[0] = (int)metre;
+}
+
 // Our main loop
 void main(void) {
+  
+  
   float tilt;
-  int tipped = 0;
+  int conv_distance, tipped = 0;
+  int *distance_samp;
+  unsigned long *lidar_sample;
   
   // declare shopper
-  Shopper shopper;
+  Shopper *shopper = (Shopper*)calloc(1, sizeof(Shopper));
   
   Vector3i raw;
-
-  // Initialise the serial port and create a buffer object for it
+  
+ // Initialise the serial port and create a buffer object for it
   SerialBuffer *sci1SerialBuffer = sci1Init(9600);
+  
+  // Tracking stuff 
+  Edge_vals edge_vals;
+  MoveParam movement;
+  unsigned long single_sample;
+  float range[2];
+  
+  int dist_count = 0;
+  int time_count = 0;
+  int angl_count = 0;
+  int max_count = 40;
+  
+  float dist_array[40];
+  float angl_array[40];
+  float time_array[40];
+  
+  float dist;
+  float angl;
+  float time;
+  int init_delay = 0;
+  int tol = 5;
+  
+  // set the acceptable range
+  range[0] = 0;
+  range[1] = 1.5;  
+
+
+  // initialise PWM
+  PWMinitialise();
+  setServoPose(100);
+
+  Init_TC6();
+    
+  /* ******************** */  
 
   // Initialise our modules            
   PLL_Init();
   initTimer();
   initMusic();  
-  initMotion();        
+  initMotion();
+  laserInit();        
   _DISABLE_COP();
   motion_calibrate();
+
+  // initialise the sensor suite
+  iicSensorInit();
                                      
 
 	EnableInterrupts;
@@ -91,13 +151,32 @@ void main(void) {
 	// Print welcome message
 	outputMessage(sci1SerialBuffer, WELCOME_MESSAGE);
 	
-	
   for(;;) { // Infinite loop
+    //start_count();
 
     tilt = motion_check_tipped_over();
     if (tilt) {
       setMusic(TIP_ALARM, 0);
     }   
+    
+    set_rotation(1);
+      
+    start_count();
+      
+    if (init_delay < 40) {
+        
+      init_delay++;
+    }
+      
+    GetLatestLaserSample(&single_sample);      
+    dist = lidar_to_dist(single_sample); 
+    dist_count = update_array(&dist_array[0], dist, dist_count, max_count); 
+      
+      
+    track_object(tol, &movement.dist[20], init_delay);
+      
+    angl = crnt_angle();
+    angl_count = update_array(&angl_array[0], angl, angl_count, max_count); 
 
 
     /* ------ Section for handling user inputs ------ */
@@ -111,12 +190,12 @@ void main(void) {
       
       
       switch (messageValue) {
-        /*case DIRECT: { // Direction
-          dummyControlInit(&shopper);
-          directionCalculator(&shopper);          
+        case DIRECT: { // Direction
+          dummyControlInit(shopper);
+          directionCalculator(shopper);          
           outputMessage(sci1SerialBuffer, shopper->instructionString);
           break;
-        } */ 
+        }  
         case DIST: { // Distance
           outputMessage(sci1SerialBuffer, message);
           break;
@@ -128,6 +207,7 @@ void main(void) {
           //itostr(raw.x, message, 8);
           outputMessage(sci1SerialBuffer, message);
           break;
+          
         }
         case TIPPED: { // System orientation
           tilt =  motion_check_tipped_over();
@@ -135,6 +215,12 @@ void main(void) {
             outputMessage(sci1SerialBuffer, TIPPED_MESSAGE);
           }
           else outputMessage(sci1SerialBuffer, UNTIPPED_MESSAGE);
+          break;
+          
+        }
+        case TIME: {
+          ftoa(time, message, 3);
+          outputMessage(sci1SerialBuffer, message);
           break;
         }
         // Default cases for no command or an unknown command
@@ -149,6 +235,11 @@ void main(void) {
       }
       // We read the new message so mark as such
       sci1SerialBuffer->inputReady = 0;
+      
     }
+    
+    // Update count 
+    time = end_count();
+    time_count = update_array(&time_array[0], time, time_count, max_count);
   }
 }

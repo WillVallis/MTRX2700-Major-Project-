@@ -23,7 +23,7 @@ typedef struct Shopper {
 } Shopper;
 
 
-void distanceAngleGeometry(Shopper *shopper);
+//void distanceAngleGeometry(Shopper *shopper);
 
 void directionCalculator (Shopper *shopper);
 

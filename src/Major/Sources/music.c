@@ -37,9 +37,9 @@ volatile int looping = 0;
 
 // Initialise the music module
 void initMusic() {
-    // Enable channel 6 and 5 for out two interrupts
-    enableOutputCompare(6);
-    enableOutputCompare(5);
+    // Enable channel 4 and 3 for out two interrupts
+    enableOutputCompare(4);
+    enableOutputCompare(3);
     DDRT |= DDRT_DDRT5_MASK; // Enable output 5 (speaker)
     // Initialise arrays for storing the song notes and lengths
     notes = (char*)malloc(256*sizeof(char));

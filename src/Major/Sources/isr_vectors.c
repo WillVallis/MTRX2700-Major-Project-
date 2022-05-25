@@ -4,6 +4,9 @@
 #include "serial.h"
 #include "music.h"
 #include "iic.h"
+#include "gyro.h"
+#include "laser.h"
+#include "servo.h"
 
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
@@ -64,13 +67,12 @@ const tIsrFunc _vect[] @0xFF80 = {     /* Interrupt table */
         UnimplementedISR,                 /* vector 0x12 */
         UnimplementedISR,                 /* vector 0x11 */
         UnimplementedISR,                 /* vector 0x10 (TOF) */
-        TC7_ISR,                 /* vector 0x0F (TIE, C7I)  */
-        noteInterrupt,                    /* vector 0x0E (TIE, C6I)  */
-        nextNoteInterrupt,                /* vector 0x0C (TIE, C5I)  */
-        UnimplementedISR,                 /* vector 0x0C (TIE, C4I)  */
-        UnimplementedISR,                 /* vector 0x0B (TIE, C3I)  */
+        TC7_ISR,                          /* vector 0x0F (TIE, C7I)  */
+        TC6_ISR,                          /* vector 0x0C (TIE, C5I)  */
+        noteInterrupt,                    /* vector 0x0C (TIE, C4I)  */
+        nextNoteInterrupt,                /* vector 0x0B (TIE, C3I)  */
         UnimplementedISR,                 /* vector 0x0A (TIE, C2I)  */
-        UnimplementedISR,                 /* vector 0x09 (TIE, C1I)  */
+        TC1_ISR,                 /* vector 0x09 (TIE, C1I)  */
         UnimplementedISR,                 /* vector 0x08 (TIE, C0I) */
         UnimplementedISR,                 /* vector 0x07 (RTIE) */
         UnimplementedISR,                 /* vector 0x06 */
