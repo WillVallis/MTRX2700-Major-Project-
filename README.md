@@ -116,4 +116,13 @@ pseudocode
     - Get the y-component of the accelerometer and take inverse cosine to get angle
     - If it is greater than 45° it is tipped over
 
-  
+##Tracking module
+
+###Function:
+ - The purpose of the tracking module is to keep the LIDAR sensor tracked onto the shopper. 
+ - This will allow the trolley to follow the shopper and maintain the required follow distance.
+ - In order to identify the edges of the object, the LIDAR sensor will pan back and forth. An edge is identified when there is a discontinuity in the reading, i.e. the sensor moves from detecting the shopper to detecting the background.
+
+### Usage
+ - In order to begin the tracking, the LIDAR sensor will be initialized at the center of the object during the startup procedure. 
+ - An issue can occur where the person is moving in the direction of the scan and moves faster than the rate of the scan; the LIDAR will begin scanning in the opposite direction and be unable to detect the shopper. In this event, a signal is be sent to issue an alert (via other modules) to the shopper that an error has occurred.
