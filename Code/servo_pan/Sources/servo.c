@@ -25,12 +25,6 @@ void PWMinitialise(void){
     PWME  |= 0xFF;      // enable PWM0
 }
 
-void setServoPose(int azimuth){  
-    PWMDTY45 = (int)(ZERO_ELEVATION_DUTY);  // Sets elevation to duty cycle using PWM 45
-    PWMDTY67 = (int)(ZERO_AZIMUTH_DUTY+azimuth);   // Sets azimuth to duty cycle using PWM 67
-}
-
-
 void Init_TC6 (void) {
   TSCR1_TEN = 1;
   
@@ -43,25 +37,70 @@ void Init_TC6 (void) {
   TFLG1 |= TFLG1_C6F_MASK;
 }
 
+/************************************************************
 
-// variables to make the servo move back and forth
-// note: This is just to demonstrate the function of the servo
+ALL CODE BELOW THIS LINE HAS BEEN EITHER ADDED OR MODIFIED FROM THE
+BASE CODE PROVIDED FOR THE ASSIGNMENT
+
+************************************************************/
+
 long iterator_counter = 0;
 int toggle = 0;
+int rotate = 0;
 
+/************************************************************
+Swtiches the pan direction.
+************************************************************/
 
-// function to be called when the scanning direction is to be switched
 void switch_dir (void) {
   
   toggle ^= 1;
 }
 
+/************************************************************
+Returns the current pan direction, where '1' is left and '0' 
+is right.
+************************************************************/
 
 int current_dir (void) {
   
   return toggle;
 }
 
+/************************************************************
+Returns the current angle for the servo based on the PWM 
+signal.
+************************************************************/
+
+float crnt_angle (void) {
+  
+  float gradient = // calculate value
+  float offset = // calculate value
+  float angle;
+  
+  angle = gradient*(float)iterator_counter+offset;
+  
+  return angle;
+}
+
+
+/************************************************************
+Sets rotation to either on or off.
+************************************************************/
+
+void set_rotation (int rotation_true) {
+  
+  rotate = rotation_true;
+}
+
+/************************************************************
+Pans the servo given a PWM signal length.
+************************************************************/
+
+void setServoPose(int azimuth){  
+    PWMDTY45 = (int)(ZERO_ELEVATION_DUTY);  // Sets elevation to duty cycle using PWM 45
+    PWMDTY67 = (int)(ZERO_AZIMUTH_DUTY+rotate*azimuth);   // Sets azimuth to duty cycle using PWM 67
+} 
 
 // the interrupt for timer 6 which is used for cycling the servo
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
