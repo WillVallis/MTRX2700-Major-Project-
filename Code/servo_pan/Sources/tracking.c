@@ -1,20 +1,18 @@
 #include "derivative.h"
 #include "tracking.h"
 
-#include <math.h>
-
 #include "servo.h"
 
 
 int laser_count = 0;
 int delay_count = 0;
 
-
-/* 
+/************************************************************ 
 Updates a 20-element array with the latest laser reading. Adjusts
 the locations of the stored data so that the array remains at a 
 maximum length of 20 elements.
-*/
+************************************************************/
+
 void update_laser (float latest_sample, float *laser_samples) {
   
   int full_length = 20;  
@@ -38,10 +36,11 @@ void update_laser (float latest_sample, float *laser_samples) {
 }      
 
 
-/*
+/************************************************************
 Toggles the pan direction if the LIDAR reading indicates that 
 the object is no longer being tracked, to a specified tolerance.
-*/
+************************************************************/
+
 void track_object (int tol, float *laser_samples) {
   
   int full_length = 20; 
@@ -79,40 +78,30 @@ void track_object (int tol, float *laser_samples) {
   
 }
 
-/*
-Calculates and returns the average of a dataset given the 
-number of samples.
-*/
-float find_av (int num_samples, float *array) {
-  
-  int i;
-  float average;
-  float sum = 0;
-  
-  for (i = 0; i < num_samples; i++) {
-    
-    sum += array[i];
-  }
-  
-  average = sum/num_samples;
-  return average;
-}
+/************************************************************
+Determines whether an object is still being tracked, given an
+array of distance values and the acceptable range that they
+should fall within. 
+************************************************************/
 
+int is_tracked(float *dist, int num_samples, float range[2]) {
 
-float conv_dist(unsigned long laser_sample) {
-  
-  float clock_freq = 24000000;
-  float conv_fact = 1000;
-  
-  float time;
-  float dist;
-  
-  time = laser_sample/clock_freq;
-  dist = time*conv_fact;   
-  
-  return dist;
+	float min = range[0];
+	float max = range[1];
+	float avg;
+
+	avg = average(num_samples, &dist[0]);
+	
+	if (avg > min && avg < max) {
+		
+		return 1;
+	}
+	
+	else {
+		return 0;
+	}
 }
-  
+ 
   
   
       

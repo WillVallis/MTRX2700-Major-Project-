@@ -117,7 +117,7 @@ void main(void) {
       sprintf(buffer, "\r\n");
       SerialOutputString(buffer, &SCI1);
       */
-      //track_object(tol, &laser_dists[0]);
+      track_object(tol, &laser_dists[0]);
       pan_dir = current_dir();
       
       sprintf(buffer, "%f m\r\n", dist);
